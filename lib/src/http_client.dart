@@ -1,29 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
-final _startSlashesMatcher = RegExp('^[\\\/]{1,}');
+class HttpClient extends http.BaseClient {
+  final http.Client _httpClient;
+  final Uri baseUri;
 
-enum UrlSchema { http, https }
+  HttpClient({this.baseUri, http.Client client})
+      : _httpClient = client ?? http.Client();
 
-class HttpClient extends BaseClient {
-  final _httpClient = Client();
-  final String host;
-  final UrlSchema schema;
+  bool get _isHttps => baseUri?.isScheme('https') ?? false;
 
-  HttpClient({this.host, this.schema});
+  String get _host => baseUri?.host;
 
-  String _makeUrl(String path, Map<String, String> query) {
-    final _path = path.replaceFirst(_startSlashesMatcher, '');
-
-    return query == null
-        ? '$schema$host/$_path'
-        : (schema == UrlSchema.https
-                ? Uri.https(host, _path, query)
-                : Uri.http(host, _path, query))
-            .toString();
-  }
+  Uri _makeUrl(String path, Map<String, String> query) =>
+      _isHttps ? Uri.https(_host, path, query) : Uri.http(_host, path, query);
 
   Future<T> request<T>(
     path, {
@@ -32,12 +24,20 @@ class HttpClient extends BaseClient {
   }) async {
     final url = _makeUrl(path, query);
     final response = await get(url, headers: headers);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+
     final body = response.body;
+
+    if (body == null || body.isEmpty) {
+      return null;
+    }
 
     return json.decode(body);
   }
 
   @override
-  Future<StreamedResponse> send(BaseRequest request) =>
+  Future<http.StreamedResponse> send(http.BaseRequest request) =>
       _httpClient.send(request);
 }
