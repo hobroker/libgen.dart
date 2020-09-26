@@ -1,11 +1,11 @@
 include: package:pedantic/analysis_options.yaml
 
-analyzer:
-  exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
-
 linter:
   rules:
     - prefer_relative_imports
     - type_annotate_public_apis
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
