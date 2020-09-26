@@ -1,5 +1,3 @@
-PROJECT = "libgen.dart"
-
 help: ## Show this help message
 	@egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#'
 
