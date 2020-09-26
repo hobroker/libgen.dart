@@ -2,18 +2,18 @@ import 'package:libgen/src/mirror.dart';
 import 'package:libgen/src/mirror_schema.dart';
 import 'package:libgen/src/util.dart';
 
-class MirrorSchemaFinder {
+class MirrorFinder {
   final List<MirrorSchema> schemas;
 
-  MirrorSchemaFinder(this.schemas);
+  MirrorFinder(this.schemas);
 
   /// Calls [LibgenMirror] ping() method and
   /// returns the [Duration] that took to do this
-  Future<Duration> _test(MirrorSchema mirror) async {
+  Future<Duration> _test(LibgenMirror mirror) async {
     try {
       final stopwatch = Stopwatch()..start();
 
-      await LibgenMirror.fromSchema(mirror).ping();
+      await mirror.ping();
 
       return stopwatch.elapsed;
     } catch (e) {
@@ -21,14 +21,19 @@ class MirrorSchemaFinder {
     }
   }
 
-  /// Calls every [MirrorSchema] ping() method and
-  /// returns the [MirrorSchema] which replied the fastest
-  Future<MirrorSchema> fastest() async {
+  /// Calls every [LibgenMirror] ping() method and
+  /// returns the [LibgenMirror] which replied the fastest
+  Future<LibgenMirror> fastest() async {
+    if (schemas.isEmpty) {
+      return null;
+    }
+    final mirrors = schemas.map((schema) => LibgenMirror.fromSchema(schema));
+
     if (schemas.length == 1) {
-      return schemas.first;
+      return mirrors.first;
     }
 
-    final futures = schemas.map((mirror) => _test(mirror));
+    final futures = mirrors.map((mirror) => _test(mirror));
     final results = await Future.wait(futures);
     final fastestIdx = minNonNullIndex(results);
 
@@ -36,22 +41,19 @@ class MirrorSchemaFinder {
       throw Exception('No working mirror');
     }
 
-    return schemas[fastestIdx];
+    return mirrors.elementAt(fastestIdx);
   }
 
-  /// Returns the first [LibgenMirror] that has a successful reply
-  Future<MirrorSchema> any() async {
+  /// Returns the first [LibgenMirror] that has a successful reply on ping()
+  Future<LibgenMirror> any() async {
     if (schemas.length == 1) {
-      return schemas.first;
+      return LibgenMirror.fromSchema(schemas.first);
     }
 
-    for (final mirror in schemas) {
-      try {
-        await LibgenMirror.fromSchema(mirror).ping();
-
+    for (final schema in schemas) {
+      final mirror = LibgenMirror.fromSchema(schema);
+      if (await _test(mirror) != null) {
         return mirror;
-      } catch (e) {
-        continue;
       }
     }
 
