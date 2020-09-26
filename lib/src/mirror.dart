@@ -11,7 +11,7 @@ class LibgenMirror {
     HttpClient client,
   }) : _http = client;
 
-  LibgenMirror.fromSchema(LibgenMirrorSchema schema)
+  LibgenMirror.fromSchema(MirrorSchema schema)
       : canDownload = schema.canDownload,
         _http = HttpClient(
           host: schema.host,

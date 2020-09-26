@@ -1,11 +1,11 @@
 import 'package:libgen/src/mirror_schema.dart';
 
 final libgenMirrorSchemas = [
-  LibgenMirrorSchema(
+  MirrorSchema(
     host: 'libgen.is',
     canDownload: true,
   ),
-  LibgenMirrorSchema(
+  MirrorSchema(
     host: 'gen.lib.rus.ec',
   ),
 ];
