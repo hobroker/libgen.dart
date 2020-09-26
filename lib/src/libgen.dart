@@ -10,8 +10,10 @@ class Libgen {
   }
 
   void setFastestMirror() async {
-    final fastest = await LibgenMirrorFinder(libgenMirrorSchemas).fastest();
+    final fastest = await LibgenMirrorFinder(mirrors).fastest();
 
     mirror = LibgenMirror.fromSchema(fastest);
   }
+
+  static final mirrors = libgenMirrorSchemas;
 }
