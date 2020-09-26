@@ -8,25 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: cedx/setup-dart@v2
-      - name: Export global pub packages PATH
-        run: echo "::set-env name=PATH::$PATH:$HOME/.pub-cache/bin"
-      - name: Activate derry
-        run: pub global activate derry
       - name: Get dependencies
         run: pub get
       - name: Run analyze
-        run: derry analyze
+        run: pub run derry analyze
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: cedx/setup-dart@v2
-      - name: Export global pub packages PATH
-        run: echo "::set-env name=PATH::$PATH:$HOME/.pub-cache/bin"
-      - name: Activate derry
-        run: pub global activate derry
       - name: Get dependencies
         run: pub get
       - name: Run tests w/ coverage
-        run: derry coverage
+        run: pub run derry coverage
