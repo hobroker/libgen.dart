@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: cedx/setup-dart@v2
       - name: Export global pub packages PATH
-        run: echo "::set-env name=PATH::"$PATH":"$HOME/.pub-cache/bin"
+        run: echo "::set-env name=PATH::$PATH:$HOME/.pub-cache/bin"
       - name: Activate derry
         run: pub global activate derry
       - name: Get dependencies
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: cedx/setup-dart@v2
       - name: Export global pub packages PATH
-        run: echo "::set-env name=PATH::"$PATH":"$HOME/.pub-cache/bin"
+        run: echo "::set-env name=PATH::$PATH:$HOME/.pub-cache/bin"
       - name: Activate derry
         run: pub global activate derry
       - name: Get dependencies
