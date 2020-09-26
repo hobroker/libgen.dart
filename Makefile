@@ -7,6 +7,12 @@ install: ## Installs dependencies
 analyze: ## Perform static analysis over lib/ test/
 	dartanalyzer lib test
 
+generate: ## Run the code generator
+	pub run build_runner build
+
+generate.watch: ## Run the code generator in watch mode
+	pub run build_runner watch
+
 test: ## Run tests
 	pub run test --reporter=expanded
 
