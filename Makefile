@@ -23,8 +23,5 @@ test.coverage: ## Run tests with coverage
 coverage.html: ## Generate HTML view for coverage
 	genhtml -o coverage coverage/lcov.info
 
-clean: ## Removes coverage/
-	rm -rf coverage
-
 .PHONY: help
 .PHONY: test
