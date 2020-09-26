@@ -6,14 +6,12 @@ class Libgen {
   LibgenMirror mirror;
 
   Libgen({this.mirror}) {
-    mirror ??= LibgenIsMirror();
+    mirror ??= LibgenMirror.fromSchema(defaultMirror);
   }
 
-  List<LibgenMirror> get _mirrors => [
-        GenLibRusEcMirror(),
-        LibgenIsMirror(),
-      ];
+  void setFastestMirror() async {
+    final fastest = await LibgenMirrorFinder(libgenMirrorSchemas).fastest();
 
-  void setFastestMirror() async =>
-      mirror = await LibgenMirrorFinder(_mirrors).fastest();
+    mirror = LibgenMirror.fromSchema(fastest);
+  }
 }

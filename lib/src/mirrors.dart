@@ -1,21 +1,17 @@
-import 'package:libgen/src/http_client.dart';
-import 'package:libgen/src/mirror.dart';
+final libgenMirrorSchemas = [
+  {
+    'uri': Uri(
+      scheme: 'http',
+      host: 'libgen.is',
+    ),
+    'canDownload': true,
+  },
+  {
+    'uri': Uri(
+      scheme: 'http',
+      host: 'gen.lib.rus.ec',
+    ),
+  },
+];
 
-class GenLibRusEcMirror extends LibgenMirror {
-  @override
-  UrlSchema get schema => UrlSchema.http;
-
-  @override
-  String get host => 'gen.lib.rus.ec';
-}
-
-class LibgenIsMirror extends LibgenMirror {
-  @override
-  UrlSchema get schema => UrlSchema.http;
-
-  @override
-  String get host => 'libgen.is';
-
-  @override
-  bool get canDownload => true;
-}
+final defaultMirror = libgenMirrorSchemas.first;

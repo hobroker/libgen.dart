@@ -1,23 +1,28 @@
 import 'package:libgen/src/http_client.dart';
 
-abstract class LibgenMirror {
-  String get host;
+class LibgenMirror {
+  final bool canDownload;
 
-  UrlSchema get schema;
+  final HttpClient _http;
 
-  bool get canDownload => false;
+  LibgenMirror({
+    this.canDownload = false,
+    HttpClient client,
+  }) : _http = client;
 
-  HttpClient _http;
+  LibgenMirror.fromSchema(Map<String, dynamic> schema)
+      : canDownload = schema['canDownload'],
+        _http = HttpClient(baseUri: schema['uri']);
 
-  LibgenMirror({HttpClient http}) : _http = http {
-    _http ??= HttpClient(host: host, schema: schema);
-  }
-
+  /// Retuns a [List] of [Map] with [fields] by [ids]
   Future<List> getByIds(List<int> ids, [String fields = '*']) =>
       _http.request('json.php', query: {
         'ids': ids.join(','),
         'fields': fields,
       });
 
+  /// Returns `"pong"` if the mirror returned any data
+  ///
+  /// Throws an [Exception] if the request fails
   Future<String> ping() => getByIds([1]).then((e) => 'pong');
 }
