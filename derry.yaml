@@ -1,3 +1,4 @@
+analyze: dartanalyzer lib
 coverage:
   - pub run test --coverage=coverage
   - pub global activate coverage
