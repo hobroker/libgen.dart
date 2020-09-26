@@ -4,23 +4,26 @@ import 'package:libgen/src/mirror_schema.dart';
 import 'package:libgen/src/mirrors.dart';
 
 class Libgen {
-  LibgenMirror mirror;
+  LibgenMirror _mirror;
 
-  Libgen({this.mirror}) {
-    mirror ??= LibgenMirror.fromSchema(defaultMirror);
+  Libgen({LibgenMirror mirror}) {
+    _mirror ??= LibgenMirror.fromSchema(defaultMirror);
   }
 
-  /// Sets [mirror] to one of [schemas]'s [LibgenMirror]
+  /// Sets [_mirror] to one of [schemas]'s [LibgenMirror]
   /// which has the shortest response
   Future setFastestMirror() async {
-    mirror = await MirrorFinder(schemas).fastest();
+    _mirror = await MirrorFinder(schemas).fastest();
   }
 
-  /// Sets [mirror] to the first [LibgenMirror] which has a successful response
+  /// Sets [_mirror] to the first [LibgenMirror] which has a successful response
   Future setAnyMirror() async {
-    mirror = await MirrorFinder(schemas).any();
+    _mirror = await MirrorFinder(schemas).any();
   }
 
   /// The list of default [MirrorSchema]
   static final schemas = libgenMirrorSchemas;
+
+  Future<List> getByIds(List<int> ids, [String fields = '*']) =>
+      _mirror.getByIds(ids, fields);
 }

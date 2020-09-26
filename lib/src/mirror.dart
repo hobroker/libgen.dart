@@ -19,10 +19,10 @@ class LibgenMirror {
         );
 
   /// Retuns a [List] of [Map] with [fields] by [ids]
-  Future<List> getByIds(List<int> ids, [String fields = '*']) =>
+  Future<List> getByIds(List<int> ids, [String fields]) =>
       _http.request('json.php', query: {
         'ids': ids.join(','),
-        'fields': fields,
+        'fields': fields ?? '*',
       });
 
   /// Returns `"pong"` if the mirror returned any data
