@@ -5,17 +5,18 @@ import 'package:http/http.dart' as http;
 
 class HttpClient extends http.BaseClient {
   final http.Client _httpClient;
-  final Uri baseUri;
+  final String scheme;
+  final String host;
 
-  HttpClient({this.baseUri, http.Client client})
-      : _httpClient = client ?? http.Client();
+  HttpClient({this.scheme, this.host, http.Client client})
+      : _httpClient = client ?? http.Client() {
+    assert(scheme != 'http' || scheme != 'htpps');
+  }
 
-  bool get _isHttps => baseUri?.isScheme('https') ?? false;
-
-  String get _host => baseUri?.host;
+  bool get _isHttps => scheme == 'https';
 
   Uri _makeUrl(String path, Map<String, String> query) =>
-      _isHttps ? Uri.https(_host, path, query) : Uri.http(_host, path, query);
+      _isHttps ? Uri.https(host, path, query) : Uri.http(host, path, query);
 
   Future<T> request<T>(
     path, {

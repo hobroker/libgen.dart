@@ -1,17 +1,13 @@
+import 'package:libgen/src/mirror_schema.dart';
+
 final libgenMirrorSchemas = [
-  {
-    'uri': Uri(
-      scheme: 'http',
-      host: 'libgen.is',
-    ),
-    'canDownload': true,
-  },
-  {
-    'uri': Uri(
-      scheme: 'http',
-      host: 'gen.lib.rus.ec',
-    ),
-  },
+  LibgenMirrorSchema(
+    host: 'libgen.is',
+    canDownload: true,
+  ),
+  LibgenMirrorSchema(
+    host: 'gen.lib.rus.ec',
+  ),
 ];
 
 final defaultMirror = libgenMirrorSchemas.first;

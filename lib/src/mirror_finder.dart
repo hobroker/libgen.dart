@@ -1,14 +1,15 @@
 import 'package:libgen/src/mirror.dart';
+import 'package:libgen/src/mirror_schema.dart';
 import 'package:libgen/src/util.dart';
 
 class LibgenMirrorFinder {
-  final List<Map> mirrors;
+  final List<LibgenMirrorSchema> mirrors;
 
   LibgenMirrorFinder(this.mirrors);
 
   /// Calls [LibgenMirror] ping() method and
   /// returns the [Duration] that took to do this
-  Future<Duration> _test(Map mirror) async {
+  Future<Duration> _test(LibgenMirrorSchema mirror) async {
     try {
       final stopwatch = Stopwatch()..start();
 
@@ -22,7 +23,7 @@ class LibgenMirrorFinder {
 
   /// Calls every [LibgenMirror] ping() method and
   /// returns the [LibgenMirror] which replied the fastest
-  Future<Map> fastest() async {
+  Future<LibgenMirrorSchema> fastest() async {
     if (mirrors.length == 1) {
       return mirrors.first;
     }

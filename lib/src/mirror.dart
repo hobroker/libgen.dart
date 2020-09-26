@@ -1,4 +1,5 @@
 import 'package:libgen/src/http_client.dart';
+import 'package:libgen/src/mirror_schema.dart';
 
 class LibgenMirror {
   final bool canDownload;
@@ -10,9 +11,12 @@ class LibgenMirror {
     HttpClient client,
   }) : _http = client;
 
-  LibgenMirror.fromSchema(Map<String, dynamic> schema)
-      : canDownload = schema['canDownload'],
-        _http = HttpClient(baseUri: schema['uri']);
+  LibgenMirror.fromSchema(LibgenMirrorSchema schema)
+      : canDownload = schema.canDownload,
+        _http = HttpClient(
+          host: schema.host,
+          scheme: schema.scheme,
+        );
 
   /// Retuns a [List] of [Map] with [fields] by [ids]
   Future<List> getByIds(List<int> ids, [String fields = '*']) =>

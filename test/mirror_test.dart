@@ -6,7 +6,8 @@ import 'package:libgen/src/http_client.dart';
 import 'package:libgen/src/mirror.dart';
 import 'package:test/test.dart';
 
-import '__mocks__/libgen_mock.dart';
+import '__mocks__/results.dart';
+import '__mocks__/schemas.dart';
 
 void main() {
   group('LibgenMirror', () {
@@ -18,6 +19,14 @@ void main() {
     final mockedLibgenMirror = ({bool withResults}) => LibgenMirror(
           client: mockedClient(withResults ? singleItemList : []),
         );
+
+    group('fromSchema', () {
+      test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
+        final mirror = LibgenMirror.fromSchema(schemaSample);
+
+        expect(mirror is LibgenMirror, equals(true));
+      });
+    });
 
     group('getByIds', () {
       test('returns the expected list of objects', () async {
