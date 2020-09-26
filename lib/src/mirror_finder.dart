@@ -1,6 +1,6 @@
-import 'package:libgen/src/mirror.dart';
-import 'package:libgen/src/mirror_schema.dart';
-import 'package:libgen/src/util.dart';
+import 'mirror.dart';
+import 'mirror_schema.dart';
+import 'util.dart';
 
 class MirrorFinder {
   final List<MirrorSchema> _schemas;
@@ -33,7 +33,7 @@ class MirrorFinder {
   Future<LibgenMirror> fastest() async {
     final mirrors = _asMirrors();
 
-    final futures = mirrors.map((mirror) => _test(mirror));
+    final futures = mirrors.map(_test);
     final results = await Future.wait(futures);
     final fastestIdx = minNonNullIndex(results);
 
