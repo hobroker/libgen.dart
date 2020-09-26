@@ -22,3 +22,7 @@ jobs:
         run: pub get
       - name: Run tests w/ coverage
         run: pub run derry coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.5
+        with:
+          fail_ci_if_error: true
