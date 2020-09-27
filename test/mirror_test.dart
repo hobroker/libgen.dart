@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:libgen/src/http_client.dart';
-import 'package:libgen/src/mirror.dart';
+import 'package:libgen/src/libgen.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/results.dart';
@@ -16,22 +16,22 @@ void main() {
               (request) async => Response(json.encode(response), statusCode)),
         );
 
-    final mockedLibgenMirror = ({bool withResults}) => LibgenMirror(
+    final mockedLibgenMirror = ({bool withResults}) => Libgen(
           client: mockedClient(withResults ? singleJsonList : []),
         );
 
     group('fromSchema', () {
       test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
-        final mirror = LibgenMirror.fromSchema(schemaSample);
+        final mirror = Libgen.fromSchema(schemaSample);
 
-        expect(mirror is LibgenMirror, equals(true));
+        expect(mirror is Libgen, equals(true));
       });
     });
 
     group('getByIds', () {
       test('returns the expected list of objects', () async {
         final response = singleJsonList;
-        final mirror = LibgenMirror(
+        final mirror = Libgen(
           client: mockedClient(response),
         );
         final result = await mirror.getByIds([1591104]);

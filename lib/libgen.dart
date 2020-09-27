@@ -1,3 +1,3 @@
 library libgen;
 
-export 'src/mirror.dart' show LibgenMirror;
+export 'src/libgen.dart' show Libgen;

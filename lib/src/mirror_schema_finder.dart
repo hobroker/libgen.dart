@@ -1,4 +1,4 @@
-import 'mirror.dart';
+import 'libgen.dart';
 import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'util.dart';
@@ -13,14 +13,14 @@ class MirrorSchemaFinder {
   ])  : assert(schemas.isNotEmpty),
         _schemas = schemas;
 
-  /// Creates a [LibgenMirror] from each [MirrorSchema] in [_schemas]
-  Iterable<LibgenMirror> _asMirrors() => _schemas
-      .map((schema) => LibgenMirror.fromSchema(schema))
+  /// Creates a [Libgen] from each [MirrorSchema] in [_schemas]
+  Iterable<Libgen> _asMirrors() => _schemas
+      .map((schema) => Libgen.fromSchema(schema))
       .toList(growable: false);
 
-  /// Calls [LibgenMirror] ping() method and
+  /// Calls [Libgen] ping() method and
   /// returns the [Duration] that took to do this
-  Future<Duration> _test(LibgenMirror mirror) async {
+  Future<Duration> _test(Libgen mirror) async {
     try {
       final stopwatch = Stopwatch()..start();
 
@@ -32,8 +32,8 @@ class MirrorSchemaFinder {
     }
   }
 
-  /// Calls every [LibgenMirror] ping() method and
-  /// returns the [LibgenMirror] which replied the fastest
+  /// Calls every [Libgen] ping() method and
+  /// returns the [Libgen] which replied the fastest
   Future<MirrorSchema> fastest() async {
     final futures = _asMirrors().map(_test);
     final results = await Future.wait(futures);
@@ -46,11 +46,11 @@ class MirrorSchemaFinder {
     return _schemas.elementAt(fastestIdx);
   }
 
-  /// Returns the first [LibgenMirror] that has a successful reply on ping().
+  /// Returns the first [Libgen] that has a successful reply on ping().
   /// Throws an [Exception] when there all calls failed
   Future<MirrorSchema> any() async {
     for (final schema in _schemas) {
-      final mirror = LibgenMirror.fromSchema(schema);
+      final mirror = Libgen.fromSchema(schema);
       if (await _test(mirror) != null) {
         return schema;
       }

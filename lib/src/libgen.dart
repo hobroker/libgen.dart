@@ -2,12 +2,12 @@ import 'http_client.dart';
 import 'mirror_schema.dart';
 import 'mirror_schema_finder.dart';
 
-class LibgenMirror {
+class Libgen {
   final bool _canDownload;
 
   final HttpClient _http;
 
-  LibgenMirror({
+  Libgen({
     bool canDownload = false,
     HttpClient client,
   })  : _http = client,
@@ -15,7 +15,7 @@ class LibgenMirror {
 
   bool get canDownload => _canDownload;
 
-  factory LibgenMirror.fromSchema(MirrorSchema schema) => LibgenMirror(
+  factory Libgen.fromSchema(MirrorSchema schema) => Libgen(
         canDownload: schema.canDownload,
         client: HttpClient(
           host: schema.host,
@@ -23,18 +23,18 @@ class LibgenMirror {
         ),
       );
 
-  /// Returns a [LibgenMirror] instance
+  /// Returns a [Libgen] instance
   /// [_http] with the first [MirrorSchema] which has the shortest response
-  static Future<LibgenMirror> fastest() async {
+  static Future<Libgen> fastest() async {
     final schema = await MirrorSchemaFinder().fastest();
-    return LibgenMirror.fromSchema(schema);
+    return Libgen.fromSchema(schema);
   }
 
-  /// Returns a [LibgenMirror] instance
+  /// Returns a [Libgen] instance
   /// [_http]  with the first [MirrorSchema] which has a successful response
-  static Future<LibgenMirror> any() async {
+  static Future<Libgen> any() async {
     final schema = await MirrorSchemaFinder().any();
-    return LibgenMirror.fromSchema(schema);
+    return Libgen.fromSchema(schema);
   }
 
   /// Retuns a [List] of [Map] with [fields] by [ids]
