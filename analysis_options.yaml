@@ -4,8 +4,3 @@ linter:
   rules:
     - prefer_relative_imports
     - type_annotate_public_apis
-
-analyzer:
-  exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
