@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:libgen/src/http_client.dart';
 import 'package:libgen/src/libgen.dart';
+import 'package:libgen/src/mirror_schema.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/results.dart';
@@ -16,9 +17,11 @@ void main() {
               (request) async => Response(json.encode(response), statusCode)),
         );
 
-    final mockedLibgenMirror = ({bool withResults}) => Libgen(
-          client: mockedClient(withResults ? singleJsonList : []),
-        );
+    final mockedLibgenMirror =
+        ({bool withResults = false, bool canDownload = false}) => Libgen(
+              client: mockedClient(withResults ? singleJsonList : []),
+              options: MirrorOptions(canDownload: canDownload),
+            );
 
     group('fromSchema', () {
       test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
@@ -58,10 +61,11 @@ void main() {
     });
 
     group('canDownload', () {
-      test('returns false', () async {
-        final mirror = mockedLibgenMirror(withResults: false);
-
-        expect(mirror.canDownload, equals(false));
+      test('returns the expected value', () async {
+        expect(mockedLibgenMirror().canDownload, equals(false));
+        expect(
+            mockedLibgenMirror(canDownload: false).canDownload, equals(false));
+        expect(mockedLibgenMirror(canDownload: true).canDownload, equals(true));
       });
     });
   });
