@@ -1,21 +1,42 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class Book {
+  final String id;
+  final String md5;
+  final String title;
+  final String author;
+  final String year;
+  final String edition;
+  final String publisher;
+  final String extension;
 
-part 'book.freezed.dart';
+  Book({
+    this.id,
+    this.md5,
+    this.title,
+    this.author,
+    this.year,
+    this.edition,
+    this.publisher,
+    this.extension,
+  });
 
-part 'book.g.dart';
+  Book.fromJson(Map json)
+      : id = json['id'],
+        md5 = json['md5'],
+        title = json['title'],
+        author = json['author'],
+        year = json['year'],
+        edition = json['edition'],
+        publisher = json['publisher'],
+        extension = json['extension'];
 
-@freezed
-abstract class Book with _$Book {
-  factory Book({
-    String id,
-    String md5,
-    String title,
-    String author,
-    String year,
-    String edition,
-    String publisher,
-    String extension,
-  }) = _Book;
-
-  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
+  Map<String, String> toJson() => {
+        'id': id,
+        'md5': md5,
+        'title': title,
+        'author': author,
+        'year': year,
+        'edition': edition,
+        'publisher': publisher,
+        'extension': extension,
+      };
 }
