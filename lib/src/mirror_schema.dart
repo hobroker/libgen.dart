@@ -6,6 +6,8 @@ class MirrorSchema {
   final String host;
   final MirrorOptions options;
 
+  Uri get uri => Uri(scheme: scheme, host: host);
+
   const MirrorSchema({
     @required this.host,
     this.scheme = 'http',

@@ -25,6 +25,7 @@ class HttpClient extends http.BaseClient {
   Uri _makeUrl(String path, Map<String, String> query) =>
       _isHttps ? Uri.https(host, path, query) : Uri.http(host, path, query);
 
+  /// Sends an HTTP GET request to [path] with the given [query] and [headers]
   Future<T> request<T>(
     String path, {
     Map<String, String> query,
@@ -45,6 +46,7 @@ class HttpClient extends http.BaseClient {
     return json.decode(body);
   }
 
+  /// Sends an HTTP request and asynchronously returns the response.
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) =>
       _httpClient.send(request);

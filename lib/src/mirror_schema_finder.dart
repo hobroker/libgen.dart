@@ -21,8 +21,7 @@ class MirrorSchemaFinder {
       .map((schema) => Libgen.fromSchema(schema))
       .toList(growable: false);
 
-  /// Calls [Libgen.ping] method and
-  /// returns the [Duration] that took to do this
+  /// Returns the [Duration] that took to call [mirror.ping]
   Future<Duration> _test(Libgen mirror) async {
     try {
       final stopwatch = Stopwatch()..start();
