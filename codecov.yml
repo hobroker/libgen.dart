@@ -1,3 +1,5 @@
 comment:
   layout: "flags, files"
   behavior: once
+coverage:
+  range: 90..100
