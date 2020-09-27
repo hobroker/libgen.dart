@@ -21,7 +21,7 @@ class MirrorSchemaFinder {
       .map((schema) => Libgen.fromSchema(schema))
       .toList(growable: false);
 
-  /// Calls [Libgen] ping() method and
+  /// Calls [Libgen.ping] method and
   /// returns the [Duration] that took to do this
   Future<Duration> _test(Libgen mirror) async {
     try {
@@ -35,7 +35,7 @@ class MirrorSchemaFinder {
     }
   }
 
-  /// Calls every [Libgen] ping() method and
+  /// Calls every [Libgen.ping] method and
   /// returns the [Libgen] which replied the fastest
   Future<MirrorSchema> fastest() async {
     final futures = _asMirrors().map(_test);
@@ -49,7 +49,7 @@ class MirrorSchemaFinder {
     return _schemas.elementAt(fastestIdx);
   }
 
-  /// Returns the first [Libgen] that has a successful reply on ping().
+  /// Returns the first [Libgen] that has a successful reply on [Libgen.ping].
   /// Throws an [Exception] when there all calls failed
   Future<MirrorSchema> any() async {
     for (final schema in _schemas) {
