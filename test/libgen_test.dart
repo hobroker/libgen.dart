@@ -23,7 +23,7 @@ void main() {
               options: MirrorOptions(canDownload: canDownload),
             );
 
-    group('fromSchema', () {
+    group('.fromSchema', () {
       test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
         final mirror = Libgen.fromSchema(schemaSample);
 
@@ -31,7 +31,7 @@ void main() {
       });
     });
 
-    group('getByIds', () {
+    group('.getById', () {
       test('returns the expected Book', () async {
         final response = singleJsonList;
         final mirror = Libgen(
@@ -50,7 +50,7 @@ void main() {
       });
     });
 
-    group('ping', () {
+    group('.ping', () {
       test('returns pong on success', () async {
         final mirror = mockedLibgenMirror(withResults: false);
         final result = await mirror.ping();
@@ -59,7 +59,7 @@ void main() {
       });
     });
 
-    group('canDownload', () {
+    group('.canDownload', () {
       test('returns the expected value', () async {
         expect(mockedLibgenMirror().canDownload, equals(false));
         expect(

@@ -23,20 +23,20 @@ class Libgen extends _AbstactLibgen {
         super(options: schema.options);
 
   /// Returns a [Libgen] instance
-  /// where [_client] is [MirrorSchema] with the shortest [ping] response
+  /// with [_client] being [MirrorSchema] with the shortest [ping] response
   static Future<Libgen> fastest() async {
     final schema = await MirrorSchemaFinder().fastest();
     return Libgen.fromSchema(schema);
   }
 
   /// Returns a [Libgen] instance
-  /// where [_client] is [MirrorSchema] with a successful [ping] response
+  /// with [_client] being [MirrorSchema] with a successful [ping] response
   static Future<Libgen> any() async {
     final schema = await MirrorSchemaFinder().any();
     return Libgen.fromSchema(schema);
   }
 
-  /// Retuns a [List] of [Map] with [fields] by [ids]
+  /// Returns a [Book] by [id]
   @override
   Future<Book> getById(String id) => _client.request('json.php', query: {
         'ids': id,
@@ -44,7 +44,7 @@ class Libgen extends _AbstactLibgen {
       }).then((results) =>
           results.isNotEmpty ? Book.fromJson(results.first) : null);
 
-  /// Returns `"pong"` if the mirror returned any data
+  /// Returns `"pong"` if the request succeeds
   ///
   /// Throws an [Exception] if the request fails
   @override
