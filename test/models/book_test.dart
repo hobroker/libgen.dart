@@ -2,7 +2,7 @@ import 'package:libgen/src/models/book.dart';
 import 'package:libgen/src/util.dart';
 import 'package:test/test.dart';
 
-import '../__mocks__/results.dart';
+import '../__mocks__/book_mock.dart';
 
 void main() {
   group('Book', () {
@@ -26,16 +26,16 @@ void main() {
 
     group('fromJson', () {
       test('returns the expected Book instance', () {
-        final result = Book.fromJson(darkMatterJson);
+        final result = Book.fromJson(darkMatterBook.json);
 
-        expect(result, equals(darkMatterBook));
+        expect(result, equals(darkMatterBook.object));
       });
     });
 
     group('toJson', () {
       test('returns the expected String', () {
         expect(
-            darkMatterBook.toJson(),
+            darkMatterBook.object.toJson(),
             equals({
               'id': '1591104',
               'md5': '7eabed69e5f2762211ec97ef972e8761',
@@ -53,14 +53,14 @@ void main() {
 
     group('toString', () {
       test('returns the expected String', () {
-        expect(darkMatterBook.toString(),
-            equals('Book ${beautify(darkMatterBook.toJson())}'));
+        expect(darkMatterBook.object.toString(),
+            equals('Book ${beautify(darkMatterBook.object.toJson())}'));
       });
     });
 
     group('hashCode', () {
       test('returns the expected String', () {
-        expect(darkMatterBook.hashCode, equals(230930195));
+        expect(darkMatterBook.object.hashCode, equals(230930195));
       });
     });
   });

@@ -7,11 +7,11 @@ import 'package:libgen/src/libgen.dart';
 import 'package:libgen/src/mirror_schema.dart';
 import 'package:test/test.dart';
 
-import '__mocks__/results.dart';
-import '__mocks__/schemas.dart';
+import '__mocks__/book_mock.dart';
+import '__mocks__/schema_mock.dart';
 
 void main() {
-  group('LibgenMirror', () {
+  group('Libgen', () {
     final mockedClient = (response, [statusCode = 200]) => HttpClient(
           client: MockClient(
               (request) async => Response(json.encode(response), statusCode)),
@@ -32,22 +32,21 @@ void main() {
     });
 
     group('getByIds', () {
-      test('returns the expected list of objects', () async {
+      test('returns the expected Book', () async {
         final response = singleJsonList;
         final mirror = Libgen(
           client: mockedClient(response),
         );
-        final result = await mirror.getByIds([1591104]);
+        final result = await mirror.getById('1591104');
 
-        expect(result, equals(response));
+        expect(result, equals(darkMatterBook.object));
       });
 
-      test('returns an empty list', () async {
-        final response = [];
+      test('returns null on no results', () async {
         final mirror = mockedLibgenMirror(withResults: false);
-        final result = await mirror.getByIds([999999]);
+        final result = await mirror.getById('999999');
 
-        expect(result, equals(response));
+        expect(result, equals(null));
       });
     });
 
