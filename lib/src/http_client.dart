@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'mirror_schema.dart';
+
 class HttpClient extends http.BaseClient {
   final http.Client _httpClient;
   final String scheme;
@@ -10,6 +12,11 @@ class HttpClient extends http.BaseClient {
 
   HttpClient({this.scheme = 'http', this.host, http.Client client})
       : _httpClient = client ?? http.Client();
+
+  factory HttpClient.fromSchema(MirrorSchema schema) => HttpClient(
+        scheme: schema.scheme,
+        host: schema.host,
+      );
 
   bool get _isHttps => scheme == 'https';
 
