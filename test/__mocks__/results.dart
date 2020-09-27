@@ -1,4 +1,6 @@
-const bookItemSample = {
+import 'package:libgen/src/models/book.dart';
+
+const darkMatterJson = {
   'id': '1591104',
   'title': 'Dark Matter',
   'volumeinfo': '',
@@ -58,4 +60,17 @@ const bookItemSample = {
   'torrent': ''
 };
 
-const singleItemList = [bookItemSample];
+Book get darkMatterBook => Book(
+      id: '1591104',
+      md5: '7eabed69e5f2762211ec97ef972e8761',
+      title: 'Dark Matter',
+      author: 'Blake Crouch',
+      year: '2016',
+      edition: '',
+      publisher: 'Crown',
+      descr: 'A mindbending, relentlessly surprising thriller',
+      identifier: '9781101904237',
+      ext: 'epub',
+    );
+
+const singleJsonList = [darkMatterJson];

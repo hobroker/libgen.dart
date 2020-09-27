@@ -5,19 +5,6 @@ import 'package:test/test.dart';
 import '../__mocks__/results.dart';
 
 void main() {
-  final book = Book(
-    id: '1591104',
-    md5: '7eabed69e5f2762211ec97ef972e8761',
-    title: 'Dark Matter',
-    author: 'Blake Crouch',
-    year: '2016',
-    edition: '',
-    publisher: 'Crown',
-    descr: 'A mindbending, relentlessly surprising thriller',
-    identifier: '9781101904237',
-    ext: 'epub',
-  );
-
   group('Book', () {
     test('throws an error if `id` is missing', () {
       try {
@@ -39,16 +26,16 @@ void main() {
 
     group('fromJson', () {
       test('returns the expected Book instance', () {
-        final result = Book.fromJson(bookItemSample);
+        final result = Book.fromJson(darkMatterJson);
 
-        expect(result, equals(book));
+        expect(result, equals(darkMatterBook));
       });
     });
 
     group('toJson', () {
       test('returns the expected String', () {
         expect(
-            book.toJson(),
+            darkMatterBook.toJson(),
             equals({
               'id': '1591104',
               'md5': '7eabed69e5f2762211ec97ef972e8761',
@@ -66,13 +53,14 @@ void main() {
 
     group('toString', () {
       test('returns the expected String', () {
-        expect(book.toString(), equals('Book ${beautify(book.toJson())}'));
+        expect(darkMatterBook.toString(),
+            equals('Book ${beautify(darkMatterBook.toJson())}'));
       });
     });
 
     group('hashCode', () {
       test('returns the expected String', () {
-        expect(book.hashCode, equals(230930195));
+        expect(darkMatterBook.hashCode, equals(230930195));
       });
     });
   });

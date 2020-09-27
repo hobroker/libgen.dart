@@ -17,7 +17,7 @@ void main() {
         );
 
     final mockedLibgenMirror = ({bool withResults}) => LibgenMirror(
-          client: mockedClient(withResults ? singleItemList : []),
+          client: mockedClient(withResults ? singleJsonList : []),
         );
 
     group('fromSchema', () {
@@ -30,11 +30,11 @@ void main() {
 
     group('getByIds', () {
       test('returns the expected list of objects', () async {
-        final response = singleItemList;
+        final response = singleJsonList;
         final mirror = LibgenMirror(
           client: mockedClient(response),
         );
-        final result = await mirror.getByIds([1]);
+        final result = await mirror.getByIds([1591104]);
 
         expect(result, equals(response));
       });
