@@ -5,11 +5,9 @@ class MirrorSchema {
   final String scheme;
   final String host;
 
-  MirrorSchema({
-    this.scheme = 'http',
+  const MirrorSchema({
     @required this.host,
+    this.scheme = 'http',
     this.canDownload = false,
-  }) {
-    assert(host != null);
-  }
+  });
 }

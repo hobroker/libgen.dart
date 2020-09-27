@@ -1,12 +1,16 @@
 import 'mirror.dart';
 import 'mirror_schema.dart';
+import 'mirrors.dart';
 import 'util.dart';
 
 class MirrorFinder {
   final List<MirrorSchema> _schemas;
 
-  MirrorFinder(List<MirrorSchema> schemas)
-      : assert(schemas.isNotEmpty),
+  /// Accepts an optional list of [MirrorSchema],
+  /// defaults to [libgenMirrorSchemas]
+  MirrorFinder([
+    List<MirrorSchema> schemas = libgenMirrorSchemas,
+  ])  : assert(schemas.isNotEmpty),
         _schemas = schemas;
 
   /// Creates a [LibgenMirror] from each [MirrorSchema] in [_schemas]
@@ -44,7 +48,8 @@ class MirrorFinder {
     return mirrors.elementAt(fastestIdx);
   }
 
-  /// Returns the first [LibgenMirror] that has a successful reply on ping()
+  /// Returns the first [LibgenMirror] that has a successful reply on ping().
+  /// Throws an [Exception] when there all calls failed
   Future<LibgenMirror> any() async {
     for (final schema in _schemas) {
       final mirror = LibgenMirror.fromSchema(schema);

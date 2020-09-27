@@ -9,19 +9,16 @@ class Libgen {
     _mirror ??= LibgenMirror.fromSchema(defaultMirror);
   }
 
-  /// Sets [_mirror] to one of [schemas]'s [LibgenMirror]
+  /// Calls each [LibgenMirror] ping() method and sets the one
   /// which has the shortest response
   Future setFastestMirror() async {
-    _mirror = await MirrorFinder(schemas).fastest();
+    _mirror = await MirrorFinder().fastest();
   }
 
   /// Sets [_mirror] to the first [LibgenMirror] which has a successful response
   Future setAnyMirror() async {
-    _mirror = await MirrorFinder(schemas).any();
+    _mirror = await MirrorFinder().any();
   }
-
-  /// The list of default [MirrorSchema]
-  static final schemas = libgenMirrorSchemas;
 
   Future<List> getByIds(List<int> ids, [String fields = '*']) =>
       _mirror.getByIds(ids, fields);
