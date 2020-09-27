@@ -1,8 +1,11 @@
+import 'package:meta/meta.dart';
+
 import 'libgen.dart';
 import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'util.dart';
 
+@immutable
 class MirrorSchemaFinder {
   final List<MirrorSchema> _schemas;
 

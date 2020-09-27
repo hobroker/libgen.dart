@@ -1,22 +1,25 @@
+import 'package:meta/meta.dart';
 import 'http_client.dart';
 import 'mirror_schema.dart';
 import 'mirror_schema_finder.dart';
 
+@immutable
 class Libgen {
-  final bool _canDownload;
+  final MirrorOptions _options;
 
   final HttpClient _http;
 
   Libgen({
-    bool canDownload = false,
+    MirrorOptions options,
     HttpClient client,
   })  : _http = client,
-        _canDownload = canDownload;
+        _options = options;
 
-  bool get canDownload => _canDownload;
+  /// Returns the internal [_options.canDownload].
+  bool get canDownload => _options.canDownload;
 
   factory Libgen.fromSchema(MirrorSchema schema) => Libgen(
-        canDownload: schema.canDownload,
+        options: schema.options,
         client: HttpClient(
           host: schema.host,
           scheme: schema.scheme,
@@ -24,14 +27,14 @@ class Libgen {
       );
 
   /// Returns a [Libgen] instance
-  /// [_http] with the first [MirrorSchema] which has the shortest response
+  /// [_http] is [MirrorSchema] with the shortest [ping] response
   static Future<Libgen> fastest() async {
     final schema = await MirrorSchemaFinder().fastest();
     return Libgen.fromSchema(schema);
   }
 
   /// Returns a [Libgen] instance
-  /// [_http]  with the first [MirrorSchema] which has a successful response
+  /// [_http] is [MirrorSchema] with a successful [ping] response
   static Future<Libgen> any() async {
     final schema = await MirrorSchemaFinder().any();
     return Libgen.fromSchema(schema);

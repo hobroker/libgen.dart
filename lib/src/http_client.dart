@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
 import 'mirror_schema.dart';
 
+@immutable
 class HttpClient extends http.BaseClient {
   final http.Client _httpClient;
   final String scheme;
