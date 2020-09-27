@@ -65,18 +65,24 @@ void main() {
 
     group('toString', () {
       test('returns the expected String', () {
-        expect(book.toString(), equals('''Book {
-  "id": "1591104",
-  "md5": "7eabed69e5f2762211ec97ef972e8761",
-  "title": "Dark Matter",
-  "author": "Blake Crouch",
-  "year": "2016",
-  "edition": "",
-  "publisher": "Crown",
-  "descr": "A mindbending, relentlessly surprising thriller",
-  "identifier": "9781101904237",
-  "extension": "epub"
-}'''));
+        expect(book.toString(), equalsIgnoringWhitespace('''Book {
+          "id": "1591104",
+          "md5": "7eabed69e5f2762211ec97ef972e8761",
+          "title": "Dark Matter",
+          "author": "Blake Crouch",
+          "year": "2016",
+          "edition": "",
+          "publisher": "Crown",
+          "descr": "A mindbending, relentlessly surprising thriller",
+          "identifier": "9781101904237",
+          "extension": "epub"
+        }'''));
+      });
+    });
+
+    group('hashCode', () {
+      test('returns the expected String', () {
+        expect(book.hashCode, equals(230930195));
       });
     });
   });
