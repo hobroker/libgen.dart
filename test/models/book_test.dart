@@ -1,4 +1,5 @@
 import 'package:libgen/src/models/book.dart';
+import 'package:libgen/src/util.dart';
 import 'package:test/test.dart';
 
 import '../__mocks__/results.dart';
@@ -65,18 +66,7 @@ void main() {
 
     group('toString', () {
       test('returns the expected String', () {
-        expect(book.toString(), equalsIgnoringWhitespace('''Book {
-          "id": "1591104",
-          "md5": "7eabed69e5f2762211ec97ef972e8761",
-          "title": "Dark Matter",
-          "author": "Blake Crouch",
-          "year": "2016",
-          "edition": "",
-          "publisher": "Crown",
-          "descr": "A mindbending, relentlessly surprising thriller",
-          "identifier": "9781101904237",
-          "extension": "epub"
-        }'''));
+        expect(book.toString(), equals('Book ${beautify(book.toJson())}'));
       });
     });
 
