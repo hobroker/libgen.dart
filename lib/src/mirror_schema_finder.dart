@@ -3,13 +3,13 @@ import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'util.dart';
 
-class MirrorFinder {
+class MirrorSchemaFinder {
   final List<MirrorSchema> _schemas;
 
   /// Accepts an optional list of [MirrorSchema],
-  /// defaults to [libgenMirrorSchemas]
-  MirrorFinder([
-    List<MirrorSchema> schemas = libgenMirrorSchemas,
+  /// defaults to [mirrorSchemas]
+  MirrorSchemaFinder([
+    List<MirrorSchema> schemas = mirrorSchemas,
   ])  : assert(schemas.isNotEmpty),
         _schemas = schemas;
 
@@ -34,30 +34,28 @@ class MirrorFinder {
 
   /// Calls every [LibgenMirror] ping() method and
   /// returns the [LibgenMirror] which replied the fastest
-  Future<LibgenMirror> fastest() async {
-    final mirrors = _asMirrors();
-
-    final futures = mirrors.map(_test);
+  Future<MirrorSchema> fastest() async {
+    final futures = _asMirrors().map(_test);
     final results = await Future.wait(futures);
     final fastestIdx = minNonNullIndex(results);
 
     if (fastestIdx == null) {
-      throw Exception('No working mirror');
+      throw Exception('No working mirror schema');
     }
 
-    return mirrors.elementAt(fastestIdx);
+    return _schemas.elementAt(fastestIdx);
   }
 
   /// Returns the first [LibgenMirror] that has a successful reply on ping().
   /// Throws an [Exception] when there all calls failed
-  Future<LibgenMirror> any() async {
+  Future<MirrorSchema> any() async {
     for (final schema in _schemas) {
       final mirror = LibgenMirror.fromSchema(schema);
       if (await _test(mirror) != null) {
-        return mirror;
+        return schema;
       }
     }
 
-    throw Exception('No working mirror');
+    throw Exception('No working mirror schema');
   }
 }

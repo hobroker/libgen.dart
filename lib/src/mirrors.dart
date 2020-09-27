@@ -1,6 +1,6 @@
 import 'mirror_schema.dart';
 
-const List<MirrorSchema> libgenMirrorSchemas = [
+const List<MirrorSchema> mirrorSchemas = [
   MirrorSchema(
     host: 'libgen.is',
     canDownload: true,
@@ -10,4 +10,4 @@ const List<MirrorSchema> libgenMirrorSchemas = [
   ),
 ];
 
-final defaultMirror = libgenMirrorSchemas.first;
+final defaultMirror = mirrorSchemas.first;
