@@ -13,7 +13,7 @@ class Book {
   final String publisher;
   final String descr;
   final String identifier;
-  final String extension;
+  final String ext;
 
   Book({
     @required this.id,
@@ -25,7 +25,7 @@ class Book {
     this.publisher,
     this.descr,
     this.identifier,
-    this.extension,
+    this.ext,
   })  : assert(id != null, 'id is required'),
         assert(md5 != null, 'md5 is required');
 
@@ -39,7 +39,7 @@ class Book {
         publisher = json['publisher'],
         descr = json['descr'],
         identifier = json['identifier'],
-        extension = json['extension'];
+        ext = json['extension'];
 
   Map<String, String> toJson() => {
         'id': id,
@@ -51,7 +51,7 @@ class Book {
         'publisher': publisher,
         'descr': descr,
         'identifier': identifier,
-        'extension': extension,
+        'extension': ext,
       };
 
   @override
@@ -68,7 +68,7 @@ class Book {
           publisher == other.publisher &&
           descr == other.descr &&
           identifier == other.identifier &&
-          extension == other.extension;
+          ext == other.ext;
 
   @override
   int get hashCode => md5.hashCode;

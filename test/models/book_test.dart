@@ -14,7 +14,7 @@ void main() {
     publisher: 'Crown',
     descr: 'A mindbending, relentlessly surprising thriller',
     identifier: '9781101904237',
-    extension: 'epub',
+    ext: 'epub',
   );
 
   group('Book', () {
