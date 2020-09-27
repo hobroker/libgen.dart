@@ -1,3 +1,8 @@
+import 'package:meta/meta.dart';
+
+import '../util.dart';
+
+@immutable
 class Book {
   final String id;
   final String md5;
@@ -6,18 +11,23 @@ class Book {
   final String year;
   final String edition;
   final String publisher;
+  final String descr;
+  final String identifier;
   final String extension;
 
   Book({
-    this.id,
-    this.md5,
+    @required this.id,
+    @required this.md5,
     this.title,
     this.author,
     this.year,
     this.edition,
     this.publisher,
+    this.descr,
+    this.identifier,
     this.extension,
-  });
+  })  : assert(id != null, 'id is required'),
+        assert(md5 != null, 'md5 is required');
 
   Book.fromJson(Map json)
       : id = json['id'],
@@ -27,6 +37,8 @@ class Book {
         year = json['year'],
         edition = json['edition'],
         publisher = json['publisher'],
+        descr = json['descr'],
+        identifier = json['identifier'],
         extension = json['extension'];
 
   Map<String, String> toJson() => {
@@ -37,6 +49,30 @@ class Book {
         'year': year,
         'edition': edition,
         'publisher': publisher,
+        'descr': descr,
+        'identifier': identifier,
         'extension': extension,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Book &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          md5 == other.md5 &&
+          title == other.title &&
+          author == other.author &&
+          year == other.year &&
+          edition == other.edition &&
+          publisher == other.publisher &&
+          descr == other.descr &&
+          identifier == other.identifier &&
+          extension == other.extension;
+
+  @override
+  int get hashCode => md5.hashCode;
+
+  @override
+  String toString() => '$runtimeType ${beautify(toJson())}';
 }
