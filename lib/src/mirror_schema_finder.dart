@@ -35,22 +35,22 @@ class MirrorSchemaFinder {
     }
   }
 
-  /// Calls every [Libgen.ping] method and
-  /// returns the [Libgen] which replied the fastest
+  /// Returns the [Libgen] with the fastest response on [Libgen.ping].
+  /// Throws an [Exception] when all fail.
   Future<MirrorSchema> fastest() async {
     final futures = _asMirrors().map(_test);
     final results = await Future.wait(futures);
     final fastestIdx = minNonNullIndex(results);
 
-    if (fastestIdx == null) {
-      throw Exception('No working mirror schema');
+    if (fastestIdx != null) {
+      return _schemas.elementAt(fastestIdx);
     }
 
-    return _schemas.elementAt(fastestIdx);
+    throw Exception('No working mirror schema');
   }
 
   /// Returns the first [Libgen] that has a successful reply on [Libgen.ping].
-  /// Throws an [Exception] when there all calls failed
+  /// Throws an [Exception] when all fail.
   Future<MirrorSchema> any() async {
     for (final schema in _schemas) {
       final mirror = Libgen.fromSchema(schema);
