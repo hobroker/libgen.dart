@@ -5,6 +5,7 @@ import 'package:http/testing.dart';
 import 'package:libgen/src/http_client.dart';
 import 'package:libgen/src/libgen.dart';
 import 'package:libgen/src/mirror_schema.dart';
+import 'package:libgen/src/mirror_schema_finder.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
@@ -23,7 +24,7 @@ void main() {
               options: MirrorOptions(canDownload: canDownload),
             );
 
-    group('.fromSchema', () {
+    group('.fromSchema()', () {
       test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
         final mirror = Libgen.fromSchema(workingSchemaSample);
 
@@ -31,7 +32,25 @@ void main() {
       });
     });
 
-    group('.getById', () {
+    group('.finder', () {
+      test('returns a `MirrorSchemaFinder` instance', () async {
+        expect(Libgen.finder is MirrorSchemaFinder, equals(true));
+      });
+    });
+
+    group('.fastest', () {
+      test('returns a `Libgen` instance', () async {
+        expect(await Libgen.fastest() is Libgen, equals(true));
+      });
+    });
+
+    group('.any', () {
+      test('returns a `Libgen` instance', () async {
+        expect(await Libgen.any() is Libgen, equals(true));
+      });
+    });
+
+    group('.getById()', () {
       test('returns the expected Book', () async {
         final response = singleJsonList;
         final mirror = Libgen(
@@ -50,7 +69,7 @@ void main() {
       });
     });
 
-    group('.ping', () {
+    group('.ping()', () {
       test('returns pong on success', () async {
         final mirror = mockedLibgenMirror(withResults: false);
         final result = await mirror.ping();
