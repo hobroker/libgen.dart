@@ -6,8 +6,6 @@ import 'package:http/testing.dart';
 import 'package:libgen/src/http_client.dart';
 import 'package:test/test.dart';
 
-import '__mocks__/schema_mock.dart';
-
 void main() {
   group('HttpClient', () {
     final mockedClient = (response, [statusCode = 200]) => HttpClient(
@@ -31,16 +29,6 @@ void main() {
       expect(request is http.StreamedResponse, equals(true));
     });
 
-    group('.fromSchema', () {
-      test('returns the expected response', () async {
-        final client = HttpClient.fromSchema(schemaSample);
-        final request =
-            await client.send(http.Request('get', schemaSample.uri));
-
-        expect(request is http.StreamedResponse, equals(true));
-      });
-    });
-
     group('.request', () {
       test('returns the expected response', () async {
         final response = {'id': '1'};
@@ -50,7 +38,7 @@ void main() {
         expect(result, equals(response));
       });
 
-      test('returns the expected response', () async {
+      test('returns the expected response on error', () async {
         final response = {};
         final client = mockedClient(response, 500);
         final result = await client.request('one').catchError((error) {

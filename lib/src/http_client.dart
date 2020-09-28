@@ -4,26 +4,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-import 'mirror_schema.dart';
+import 'util.dart';
 
 @immutable
 class HttpClient extends http.BaseClient {
   final http.Client _httpClient;
-  final String scheme;
-  final String host;
+  final Uri baseUri;
 
-  HttpClient({this.scheme = 'http', this.host, http.Client client})
-      : _httpClient = client ?? http.Client();
-
-  factory HttpClient.fromSchema(MirrorSchema schema) => HttpClient(
-        scheme: schema.scheme,
-        host: schema.host,
-      );
-
-  bool get _isHttps => scheme == 'https';
-
-  Uri _makeUrl(String path, Map<String, String> query) =>
-      _isHttps ? Uri.https(host, path, query) : Uri.http(host, path, query);
+  HttpClient({
+    this.baseUri,
+    http.Client client,
+  }) : _httpClient = client ?? http.Client();
 
   /// Sends an HTTP GET request to [path] with the given [query] and [headers]
   Future<T> request<T>(
@@ -31,7 +22,7 @@ class HttpClient extends http.BaseClient {
     Map<String, String> query,
     Map<String, String> headers,
   }) async {
-    final url = _makeUrl(path, query);
+    final url = baseUri?.replace(path: path, queryParameters: query);
     final response = await get(url, headers: headers);
     if (response.statusCode != 200) {
       throw response;
