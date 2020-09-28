@@ -9,5 +9,3 @@ final List<MirrorSchema> mirrorSchemas = [
     baseUri: Uri.http('gen.lib.rus.ec', ''),
   ),
 ];
-
-final defaultMirror = mirrorSchemas.first;
