@@ -1,5 +1,6 @@
 import 'package:libgen/src/libgen.dart';
 import 'package:libgen/src/mirror_schema_finder.dart';
+import 'package:libgen/src/mirrors.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -20,6 +21,9 @@ void main() {
     };
 
     test('.fromSchemas() returns a `MirrorSchemaFinder` instance', () {
+      expect(
+          MirrorSchemaFinder.fromSchemas(mirrorSchemas) is MirrorSchemaFinder,
+          equals(true));
       expect(
           MirrorSchemaFinder.fromSchemas([workingSchemaSample])
               is MirrorSchemaFinder,
