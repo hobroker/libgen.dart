@@ -44,7 +44,7 @@ void main() {
               'year': '2016',
               'edition': '',
               'publisher': 'Crown',
-              'descr': 'A mindbending, relentlessly surprising thriller',
+              'descr': darkMatterBook.object.description,
               'identifier': '9781101904237',
               'extension': 'epub'
             }));
