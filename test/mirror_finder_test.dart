@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
+import '__mocks__/schema_mock.dart';
 
 // ignore: must_be_immutable
 class MockLibgen extends Mock implements Libgen {}
@@ -17,6 +18,15 @@ void main() {
       reset(workingMirror);
       reset(brokenMirror);
     };
+
+    test('.fromSchemas() returns a `MirrorSchemaFinder` instance', () {
+      expect(
+          MirrorSchemaFinder.fromSchemas([workingSchemaSample])
+              is MirrorSchemaFinder,
+          equals(true));
+      expect(MirrorSchemaFinder.fromSchemas([]) is MirrorSchemaFinder,
+          equals(true));
+    });
 
     group('.fastest()', () {
       final finder = MirrorSchemaFinder(list);
