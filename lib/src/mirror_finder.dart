@@ -2,14 +2,14 @@ import 'libgen.dart';
 import 'mirror_schema.dart';
 import 'util.dart';
 
-class MirrorSchemaFinder {
+class MirrorFinder {
   final Iterable<Libgen> _mirrors;
 
   /// Accepts an [Iterable] of [Libgen]
-  MirrorSchemaFinder(Iterable<Libgen> mirrors) : _mirrors = mirrors;
+  MirrorFinder(Iterable<Libgen> mirrors) : _mirrors = mirrors;
 
   /// Sets [_mirrors] to [schemas] mapped to [Libgen]
-  MirrorSchemaFinder.fromSchemas(Iterable<MirrorSchema> schemas)
+  MirrorFinder.fromSchemas(Iterable<MirrorSchema> schemas)
       : _mirrors = schemas.map((schema) => Libgen.fromSchema(schema));
 
   /// Returns the [Duration] that took to call [mirror.ping]

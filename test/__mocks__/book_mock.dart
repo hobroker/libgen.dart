@@ -6,6 +6,8 @@ class _BookMock {
 
   const _BookMock({this.object, this.json});
 
+  String get id => object.id;
+
   @override
   String toString() => object.toString();
 }

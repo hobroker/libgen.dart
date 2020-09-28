@@ -5,14 +5,14 @@ import 'package:http/testing.dart';
 import 'package:libgen/src/http_client.dart';
 import 'package:libgen/src/libgen.dart';
 import 'package:libgen/src/mirror_schema.dart';
-import 'package:libgen/src/mirror_schema_finder.dart';
+import 'package:libgen/src/mirror_finder.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
 import '__mocks__/schema_mock.dart';
 
 void main() {
-  group('Libgen', () {
+  group('$Libgen', () {
     final mockedClient = (response, [statusCode = 200]) => HttpClient(
           client: MockClient(
               (request) async => Response(json.encode(response), statusCode)),
@@ -25,7 +25,7 @@ void main() {
             );
 
     group('.fromSchema()', () {
-      test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
+      test('creates a new LibgenMirror from $MirrorSchema', () async {
         final mirror = Libgen.fromSchema(workingSchemaSample);
 
         expect(mirror is Libgen, equals(true));
@@ -33,19 +33,19 @@ void main() {
     });
 
     group('.finder', () {
-      test('returns a `MirrorSchemaFinder` instance', () async {
-        expect(Libgen.finder is MirrorSchemaFinder, equals(true));
+      test('returns a $MirrorFinder instance', () async {
+        expect(Libgen.finder is MirrorFinder, equals(true));
       });
     });
 
     group('.fastest', () {
-      test('returns a `Libgen` instance', () async {
+      test('returns a $Libgen instance', () async {
         expect(await Libgen.fastest() is Libgen, equals(true));
       });
     });
 
     group('.any', () {
-      test('returns a `Libgen` instance', () async {
+      test('returns a $Libgen instance', () async {
         expect(await Libgen.any() is Libgen, equals(true));
       });
     });

@@ -7,7 +7,7 @@ import 'package:libgen/src/http_client.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('HttpClient', () {
+  group('$HttpClient', () {
     final mockedClient = (response, [statusCode = 200]) => HttpClient(
           client: MockClient(
               (request) async => Response(json.encode(response), statusCode)),

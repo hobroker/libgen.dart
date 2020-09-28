@@ -26,7 +26,7 @@ void main() {
     });
   });
 
-  test('returns null on null input', () {
+  test('returns "null" on null input', () {
     expect(beautify(null), equals('null'));
   });
 }

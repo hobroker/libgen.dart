@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 import 'http_client.dart';
 import 'mirror_schema.dart';
-import 'mirror_schema_finder.dart';
+import 'mirror_finder.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
 
@@ -20,8 +20,8 @@ class Libgen extends _AbstactLibgen {
       : _client = HttpClient(baseUri: schema.baseUri),
         super(options: schema.options);
 
-  static MirrorSchemaFinder get finder =>
-      MirrorSchemaFinder.fromSchemas(mirrorSchemas);
+  static MirrorFinder get finder =>
+      MirrorFinder.fromSchemas(mirrorSchemas);
 
   /// Returns a [Libgen] instance
   /// with [_client] being [MirrorSchema] with the shortest [ping] response
