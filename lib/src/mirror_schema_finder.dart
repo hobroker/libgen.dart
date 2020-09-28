@@ -36,7 +36,7 @@ class MirrorSchemaFinder {
       return _mirrors.elementAt(fastestIdx);
     }
 
-    throw Exception('No working mirror schema');
+    throw Exception('No working mirror');
   }
 
   /// Returns the first [Libgen] that has a successful reply on [Libgen.ping].
@@ -48,6 +48,6 @@ class MirrorSchemaFinder {
       }
     }
 
-    throw Exception('No working mirror schema');
+    throw Exception('No working mirror');
   }
 }
