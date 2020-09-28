@@ -25,7 +25,7 @@ void main() {
 
     group('.fromSchema', () {
       test('creates a new LibgenMirror from LibgenMirrorSchema', () async {
-        final mirror = Libgen.fromSchema(schemaSample);
+        final mirror = Libgen.fromSchema(workingSchemaSample);
 
         expect(mirror is Libgen, equals(true));
       });

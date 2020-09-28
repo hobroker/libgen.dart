@@ -5,6 +5,9 @@ class _BookMock {
   final Map json;
 
   const _BookMock({this.object, this.json});
+
+  @override
+  String toString() => object.toString();
 }
 
 final singleJsonList = [darkMatterBook.json];
@@ -74,7 +77,7 @@ const darkMatterBook = _BookMock(
     'toc': '',
     'sha1': 'B7PNQU2M2NAGWPU6RWZET4AHWOTJVFFO',
     'sha256':
-    'AEF0BDEFF001AE1937D542D987A5B50F1E188B8094DF777ED4377FB169E8A295',
+        'AEF0BDEFF001AE1937D542D987A5B50F1E188B8094DF777ED4377FB169E8A295',
     'crc32': '92BCB4FA',
     'edonkey': 'A3F48BCE8C942CAB907C43CEA7DE6F4E',
     'aich': 'YGQSMSV2SDEYWM6FRTLJQWXTZ4GJCE5T',

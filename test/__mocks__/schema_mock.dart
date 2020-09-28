@@ -1,5 +1,9 @@
 import 'package:libgen/src/mirror_schema.dart';
 
-final schemaSample = MirrorSchema(
-  host: 'gen.lib.rus.ec',
+final workingSchemaSample = MirrorSchema(
+  baseUri: Uri.http('libgen.is', ''),
+);
+
+final brokenSchemaSample = MirrorSchema(
+  baseUri: Uri.http('libgen.is', ''),
 );
