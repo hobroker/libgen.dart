@@ -1,17 +1,5 @@
 import 'package:libgen/src/models/book.dart';
 
-class _BookMock {
-  final Book object;
-  final Map json;
-
-  _BookMock(this.json) : object = Book.fromJson(json);
-
-  String get id => object.id;
-
-  @override
-  String toString() => object.toString();
-}
-
 final singleJsonList = [darkMatterBook.json];
 
 final darkMatterBook = _BookMock({
@@ -75,3 +63,15 @@ final darkMatterBook = _BookMock({
   'torrent':
       'ZDQ6aW5mb2Q2Omxlbmd0aGk0NzgzMjJlNDpuYW1lMzI6N2VhYmVkNjllNWYyNzYyMjExZWM5N2VmOTcyZTg3NjExMjpwaWVjZSBsZW5ndGhpMTY3NzcyMTZlNjpwaWVjZXMyMDoP3thTTNNAaz6ejbJJ8AezppqUrmVl'
 });
+
+class _BookMock {
+  final Book object;
+  final Map json;
+
+  _BookMock(this.json) : object = Book.fromJson(json);
+
+  String get id => object.id;
+
+  @override
+  String toString() => object.toString();
+}

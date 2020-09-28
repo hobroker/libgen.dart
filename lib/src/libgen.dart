@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 
 import 'http_client.dart';
-import 'mirror_schema.dart';
 import 'mirror_finder.dart';
+import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
 
@@ -11,8 +11,8 @@ class Libgen extends _AbstactLibgen {
   final HttpClient _client;
 
   const Libgen({
-    MirrorOptions options,
-    HttpClient client,
+    @required HttpClient client,
+    MirrorOptions options = const MirrorOptions(),
   })  : _client = client,
         super(options: options);
 
@@ -20,8 +20,7 @@ class Libgen extends _AbstactLibgen {
       : _client = HttpClient(baseUri: schema.baseUri),
         super(options: schema.options);
 
-  static MirrorFinder get finder =>
-      MirrorFinder.fromSchemas(mirrorSchemas);
+  static MirrorFinder get finder => MirrorFinder.fromSchemas(mirrorSchemas);
 
   /// Returns a [Libgen] instance
   /// with [_client] being [MirrorSchema] with the shortest [ping] response
@@ -43,7 +42,7 @@ class Libgen extends _AbstactLibgen {
   ///
   /// Throws an [Exception] if the request fails
   @override
-  Future<String> ping() => getById('1').then((e) => 'pong');
+  Future<String> ping() => getById('0').then((e) => 'pong');
 }
 
 @immutable
