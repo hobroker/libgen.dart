@@ -24,7 +24,7 @@ void main() {
       }
     });
 
-    group('fromJson', () {
+    group('.fromJson()', () {
       test('returns the expected Book instance', () {
         final result = Book.fromJson(darkMatterBook.json);
 
@@ -32,7 +32,7 @@ void main() {
       });
     });
 
-    group('toJson', () {
+    group('.toJson()', () {
       test('returns the expected String', () {
         expect(
             darkMatterBook.object.toJson(),
@@ -51,14 +51,14 @@ void main() {
       });
     });
 
-    group('toString', () {
+    group('.toString()', () {
       test('returns the expected String', () {
         expect(darkMatterBook.object.toString(),
             equals('Book ${beautify(darkMatterBook.object.toJson())}'));
       });
     });
 
-    group('hashCode', () {
+    group('.hashCode', () {
       test('returns the expected String', () {
         expect(darkMatterBook.object.hashCode, equals(230930195));
       });

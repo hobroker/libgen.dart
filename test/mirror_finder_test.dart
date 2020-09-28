@@ -11,7 +11,7 @@ import '__mocks__/schema_mock.dart';
 class MockLibgen extends Mock implements Libgen {}
 
 void main() {
-  group('$MirrorFinder', () {
+  group('MirrorFinder', () {
     final workingMirror = MockLibgen();
     final brokenMirror = MockLibgen();
     final list = [workingMirror, brokenMirror];

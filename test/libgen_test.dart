@@ -12,7 +12,7 @@ import '__mocks__/book_mock.dart';
 import '__mocks__/schema_mock.dart';
 
 void main() {
-  group('$Libgen', () {
+  group('Libgen', () {
     final mockedClient = (response, [statusCode = 200]) => HttpClient(
           client: MockClient(
               (request) async => Response(json.encode(response), statusCode)),
