@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'http_client.dart';
 import 'mirror_schema.dart';
 import 'mirror_schema_finder.dart';
+import 'mirrors.dart';
 import 'models/book.dart';
 
 @immutable
@@ -16,25 +17,19 @@ class Libgen extends _AbstactLibgen {
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)
-      : _client = HttpClient(
-          host: schema.host,
-          scheme: schema.scheme,
-        ),
+      : _client = HttpClient(baseUri: schema.baseUri),
         super(options: schema.options);
+
+  static MirrorSchemaFinder get finder =>
+      MirrorSchemaFinder.fromSchemas(mirrorSchemas);
 
   /// Returns a [Libgen] instance
   /// with [_client] being [MirrorSchema] with the shortest [ping] response
-  static Future<Libgen> fastest() async {
-    final schema = await MirrorSchemaFinder().fastest();
-    return Libgen.fromSchema(schema);
-  }
+  static Future<Libgen> fastest() => finder.fastest();
 
   /// Returns a [Libgen] instance
   /// with [_client] being [MirrorSchema] with a successful [ping] response
-  static Future<Libgen> any() async {
-    final schema = await MirrorSchemaFinder().any();
-    return Libgen.fromSchema(schema);
-  }
+  static Future<Libgen> any() => finder.any();
 
   /// Returns a [Book] by [id]
   @override
