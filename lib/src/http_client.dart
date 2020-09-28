@@ -23,7 +23,7 @@ class HttpClient extends http.BaseClient {
     final url = baseUri?.replace(path: path, queryParameters: query);
     final response = await get(url, headers: headers);
     if (response.statusCode != 200) {
-      throw response;
+      throw HttpException(response);
     }
 
     final body = response.body;
@@ -39,4 +39,10 @@ class HttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) =>
       _httpClient.send(request);
+}
+
+class HttpException implements Exception {
+  final http.Response response;
+
+  HttpException(this.response);
 }

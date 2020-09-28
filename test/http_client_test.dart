@@ -7,7 +7,7 @@ import 'package:libgen/src/http_client.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('$HttpClient', () {
+  group('HttpClient', () {
     final mockedClient = (response, [statusCode = 200]) => HttpClient(
           client: MockClient(
               (request) async => Response(json.encode(response), statusCode)),
@@ -41,10 +41,14 @@ void main() {
       test('returns the expected response on error', () async {
         final response = {};
         final client = mockedClient(response, 500);
-        final result = await client.request('one').catchError((error) {
-          expect(error.body, equals(response.toString()));
-        });
-        expect(result, equals(null));
+
+        try {
+          await client.request('one');
+          assert(false);
+        } catch (exception) {
+          expect(exception is HttpException, equals(true));
+          expect(exception.response.body, equals(response.toString()));
+        }
       });
     });
   });
