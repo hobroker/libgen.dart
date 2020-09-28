@@ -34,7 +34,6 @@ void main() {
 
     group('.toJson()', () {
       test('returns a Map with expected keys', () {
-        print(darkMatterBook.object.toJson().keys);
         expect(darkMatterBook.object.toJson().keys, [
           'id',
           'md5',
