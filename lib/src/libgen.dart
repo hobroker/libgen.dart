@@ -23,11 +23,11 @@ class Libgen extends _AbstactLibgen {
   static MirrorFinder get finder => MirrorFinder.fromSchemas(mirrorSchemas);
 
   /// Returns a [Libgen] instance
-  /// with [_client] being [MirrorSchema] with the shortest [ping] response
+  /// with [_client] being [MirrorSchema] with THE SHORTEST [ping] response
   static Future<Libgen> fastest() => finder.fastest();
 
   /// Returns a [Libgen] instance
-  /// with [_client] being [MirrorSchema] with a successful [ping] response
+  /// with [_client] being [MirrorSchema] with ANY SUCCESSFUL [ping] response
   static Future<Libgen> any() => finder.any();
 
   /// Returns a [Book] by [id]
