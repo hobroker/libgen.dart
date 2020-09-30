@@ -1,16 +1,11 @@
-import 'package:libgen/src/http_client.dart';
 import 'package:libgen/src/libgen.dart';
 import 'package:libgen/src/mirror_finder.dart';
 import 'package:libgen/src/mirror_schema.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
 import '__mocks__/schema_mock.dart';
 import 'utils.dart';
-
-// ignore: must_be_immutable
-class MockHttpClient extends Mock implements HttpClient {}
 
 void main() {
   group('Libgen', () {

@@ -18,6 +18,11 @@ void main() {
     final _reset = () {
       reset(workingMirror);
       reset(brokenMirror);
+
+      when(workingMirror.ping())
+          .thenAnswer((_) async => darkMatterBook.toString());
+
+      when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
     };
 
     test('.fromSchemas() returns a [MirrorFinder] instance', () {
@@ -33,18 +38,11 @@ void main() {
       setUp(_reset);
 
       test('returns the expected [Libgen] instance', () async {
-        when(workingMirror.ping())
-            .thenAnswer((_) async => darkMatterBook.toString());
-
-        when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
-
         expect(await finder.fastest(), equals(workingMirror));
       });
 
       test('throws an [Exception] when all mirrros throw', () async {
         when(workingMirror.ping()).thenAnswer((_) async => throw Exception());
-
-        when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
 
         try {
           await finder.fastest();
@@ -60,27 +58,17 @@ void main() {
       setUp(_reset);
 
       test('returns the expected [Libgen] instance', () async {
-        when(workingMirror.ping())
-            .thenAnswer((_) async => darkMatterBook.toString());
-
-        when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
-
         expect(await finder.any(), equals(workingMirror));
       });
 
       test('does not call the other mirror once it finds one', () async {
-        when(workingMirror.ping())
-            .thenAnswer((_) async => darkMatterBook.toString());
+        expect(await finder.any(), equals(workingMirror));
 
         verifyZeroInteractions(brokenMirror);
-
-        expect(await finder.any(), equals(workingMirror));
       });
 
       test('throws an [Exception] when all mirrros throw', () async {
         when(workingMirror.ping()).thenAnswer((_) async => throw Exception());
-
-        when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
 
         try {
           await finder.any();
