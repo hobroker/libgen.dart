@@ -3,8 +3,9 @@ import 'package:libgen/src/models/book.dart';
 final singleJsonList = [darkMatterBook.json];
 
 final booksById = {
-  '1591104': darkMatterBook,
-  '1': firstBook,
+  -1: null,
+  1: firstBook,
+  1591104: darkMatterBook,
 };
 
 final darkMatterBook = _BookMock({
@@ -136,7 +137,7 @@ class _BookMock {
 
   _BookMock(this.json) : object = Book.fromJson(json);
 
-  String get id => object.id;
+  int get id => object.id;
 
   @override
   String toString() => object.toString();

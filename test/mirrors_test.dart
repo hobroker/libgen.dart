@@ -15,7 +15,7 @@ void main() {
           expect(await mirror.ping(), equals('pong'));
         });
 
-        test('returns the expected `Book`', () async {
+        test('returns the expected [Book]', () async {
           expect(await mirror.getById(darkMatterBook.id),
               equals(darkMatterBook.object));
         });

@@ -12,7 +12,7 @@ MockHttpClient defaultMockedClient() {
       (Invocation invocation) async => invocation
           .named('query')['ids']
           .split(',')
-          .map<Map>((id) => booksById[id]?.json)
+          .map<Map>((id) => booksById[int.parse(id)]?.json)
           .where((e) => e != null)
           .toList(growable: false));
 

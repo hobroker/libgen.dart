@@ -14,7 +14,7 @@ HttpClient _mockedClientWithRespoonse(response, [statusCode = 200]) =>
 
 void main() {
   group('HttpClient', () {
-    test('provides a default `client`', () async {
+    test('provides a default [client]', () async {
       final client = HttpClient();
       final uri = Uri(scheme: 'https', host: 'example.com');
       final request = await client.send(Request('get', uri));
@@ -22,7 +22,7 @@ void main() {
       expect(request is StreamedResponse, equals(true));
     });
 
-    test('accepts a `client`', () async {
+    test('accepts a [client]', () async {
       final _client = _mockedClientWithRespoonse('', 200);
       final client = HttpClient(client: _client);
       final request = await client.send(Request('get', Uri()));

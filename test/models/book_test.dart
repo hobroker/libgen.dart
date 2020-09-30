@@ -6,7 +6,7 @@ import '../__mocks__/book_mock.dart';
 
 void main() {
   group('Book', () {
-    test('throws an error if `id` is missing', () {
+    test('throws an error if [id] is missing', () {
       try {
         // ignore: missing_required_param
         Book(md5: '1');
@@ -15,10 +15,10 @@ void main() {
       }
     });
 
-    test('throws an error if `md5` is missing', () {
+    test('throws an error if [md5] is missing', () {
       try {
         // ignore: missing_required_param
-        Book(id: '1');
+        Book(id: 1);
       } catch (e) {
         expect(e.message, equals('md5 is required'));
       }

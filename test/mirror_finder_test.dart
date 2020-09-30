@@ -20,7 +20,7 @@ void main() {
       reset(brokenMirror);
     };
 
-    test('.fromSchemas() returns a `MirrorFinder` instance', () {
+    test('.fromSchemas() returns a [MirrorFinder] instance', () {
       expect(MirrorFinder.fromSchemas(mirrorSchemas) is MirrorFinder,
           equals(true));
       expect(MirrorFinder.fromSchemas([workingSchemaSample]) is MirrorFinder,
@@ -32,7 +32,7 @@ void main() {
       final finder = MirrorFinder(list);
       setUp(_reset);
 
-      test('returns the expected `Libgen` instance', () async {
+      test('returns the expected [Libgen] instance', () async {
         when(workingMirror.ping())
             .thenAnswer((_) async => darkMatterBook.toString());
 
@@ -41,7 +41,7 @@ void main() {
         expect(await finder.fastest(), equals(workingMirror));
       });
 
-      test('throws an `Exception` when all mirrros throw', () async {
+      test('throws an [Exception] when all mirrros throw', () async {
         when(workingMirror.ping()).thenAnswer((_) async => throw Exception());
 
         when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
@@ -59,7 +59,7 @@ void main() {
       final finder = MirrorFinder(list);
       setUp(_reset);
 
-      test('returns the expected `Libgen` instance', () async {
+      test('returns the expected [Libgen] instance', () async {
         when(workingMirror.ping())
             .thenAnswer((_) async => darkMatterBook.toString());
 
@@ -77,7 +77,7 @@ void main() {
         expect(await finder.any(), equals(workingMirror));
       });
 
-      test('throws an `Exception` when all mirrros throw', () async {
+      test('throws an [Exception] when all mirrros throw', () async {
         when(workingMirror.ping()).thenAnswer((_) async => throw Exception());
 
         when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());

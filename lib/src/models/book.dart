@@ -4,7 +4,7 @@ import '../util.dart';
 
 @immutable
 class Book {
-  final String id;
+  final int id;
   final String md5;
   final String title;
   final String author;
@@ -30,7 +30,7 @@ class Book {
         assert(md5 != null, 'md5 is required');
 
   Book.fromJson(Map json)
-      : id = json['id'],
+      : id = int.parse(json['id']),
         md5 = json['md5'],
         title = json['title'],
         author = json['author'],
@@ -41,7 +41,7 @@ class Book {
         identifier = json['identifier'],
         ext = json['extension'];
 
-  Map<String, String> toJson() => {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'md5': md5,
         'title': title,

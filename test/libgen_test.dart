@@ -15,7 +15,7 @@ class MockHttpClient extends Mock implements HttpClient {}
 void main() {
   group('Libgen', () {
     group('.fromSchema()', () {
-      test('creates a new `Libgen` from `MirrorSchema', () async {
+      test('creates a new [Libgen] from [MirrorSchema]', () async {
         final mirror = Libgen.fromSchema(workingSchemaSample);
 
         expect(mirror is Libgen, equals(true));
@@ -23,54 +23,54 @@ void main() {
     });
 
     group('.finder', () {
-      test('returns a `MirrorFinder` instance', () async {
+      test('returns a [MirrorFinder] instance', () async {
         expect(Libgen.finder is MirrorFinder, equals(true));
       });
     });
 
     group('.fastest', () {
-      test('returns a `Libgen` instance', () async {
+      test('returns a [Libgen] instance', () async {
         expect(await Libgen.fastest() is Libgen, equals(true));
       });
     });
 
     group('.any', () {
-      test('returns a `Libgen` instance', () async {
+      test('returns a [Libgen] instance', () async {
         expect(await Libgen.any() is Libgen, equals(true));
       });
     });
 
     group('.getById()', () {
-      test('returns the expected `Book`', () async {
+      test('returns the expected [Book]', () async {
         final mirror = Libgen(client: defaultMockedClient());
-        final result = await mirror.getById('1591104');
+        final result = await mirror.getById(1591104);
 
         expect(result, equals(darkMatterBook.object));
       });
 
       test('returns null on no results', () async {
         final mirror = Libgen(client: defaultMockedClient());
-        final result = await mirror.getById('missing');
+        final result = await mirror.getById(-1);
 
         expect(result, equals(null));
       });
     });
 
     group('.getByIds()', () {
-      test('returns the expected list of books', () async {
+      test('returns the expected [List] of [Book]', () async {
         final mirror = Libgen(client: defaultMockedClient());
         final expected = {
-          '1': firstBook.object,
-          '1591104': darkMatterBook.object,
+          1: firstBook.object,
+          1591104: darkMatterBook.object,
         };
-        final result = await mirror.getByIds(List<String>.from(expected.keys));
+        final result = await mirror.getByIds(List<int>.from(expected.keys));
 
         expect(result, equals(expected.values));
       });
 
       test('returns empty array on no results', () async {
         final mirror = Libgen(client: defaultMockedClient());
-        final result = await mirror.getByIds(['missing']);
+        final result = await mirror.getByIds([-1]);
 
         expect(result, equals([]));
       });
@@ -86,7 +86,7 @@ void main() {
     });
 
     group('.canDownload', () {
-      test('returns false when `options` are missing', () async {
+      test('returns false when [options] are missing', () async {
         final mirror = Libgen(client: defaultMockedClient());
 
         expect(mirror.canDownload, equals(false));

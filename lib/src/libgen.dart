@@ -33,7 +33,7 @@ class Libgen extends _AbstactLibgen {
   /// Returns a [Book] by [id]
   /// Returns [Null] on no result
   @override
-  Future<Book> getById(String id) async {
+  Future<Book> getById(int id) async {
     final results = await getByIds([id]);
 
     if (results.isEmpty == true) {
@@ -45,7 +45,7 @@ class Libgen extends _AbstactLibgen {
 
   /// Returns a [List] of [Book] by [ids]
   @override
-  Future<List<Book>> getByIds(List<String> ids) async {
+  Future<List<Book>> getByIds(List<int> ids) async {
     final results = await _client.request<List>('json.php',
         query: {'ids': ids.join(','), 'fields': '*'});
 
@@ -56,7 +56,7 @@ class Libgen extends _AbstactLibgen {
   ///
   /// Returns [Exception] if the request fails
   @override
-  Future<String> ping() => getById('1').then((e) => 'pong');
+  Future<String> ping() => getById(1).then((e) => 'pong');
 }
 
 @immutable
@@ -70,9 +70,9 @@ abstract class _AbstactLibgen {
   /// Returns the internal [_options.canDownload].
   bool get canDownload => _options.canDownload;
 
-  Future<Book> getById(String id);
+  Future<Book> getById(int id);
 
-  Future<List<Book>> getByIds(List<String> id);
+  Future<List<Book>> getByIds(List<int> id);
 
   Future<String> ping();
 }
