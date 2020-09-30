@@ -7,25 +7,13 @@ import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
 import '__mocks__/schema_mock.dart';
+import 'utils.dart';
 
 // ignore: must_be_immutable
 class MockHttpClient extends Mock implements HttpClient {}
 
 void main() {
   group('Libgen', () {
-    final client = MockHttpClient();
-    when(client.request('json.php', query: {
-      'ids': '1591104',
-      'fields': '*',
-    })).thenAnswer((_) async => singleJsonList);
-    when(client.request('json.php', query: {
-      'ids': '0',
-      'fields': '*',
-    })).thenAnswer((_) async => []);
-
-    final mockedLibgenMirror = ({bool canDownload = false}) => Libgen(
-        client: client, options: MirrorOptions(canDownload: canDownload));
-
     group('.fromSchema()', () {
       test('creates a new `Libgen` from `MirrorSchema', () async {
         final mirror = Libgen.fromSchema(workingSchemaSample);
@@ -54,23 +42,43 @@ void main() {
 
     group('.getById()', () {
       test('returns the expected `Book`', () async {
-        final mirror = mockedLibgenMirror();
+        final mirror = Libgen(client: defaultMockedClient());
         final result = await mirror.getById('1591104');
 
         expect(result, equals(darkMatterBook.object));
       });
 
       test('returns null on no results', () async {
-        final mirror = mockedLibgenMirror();
-        final result = await mirror.getById('0');
+        final mirror = Libgen(client: defaultMockedClient());
+        final result = await mirror.getById('missing');
 
         expect(result, equals(null));
       });
     });
 
+    group('.getByIds()', () {
+      test('returns the expected list of books', () async {
+        final mirror = Libgen(client: defaultMockedClient());
+        final expected = {
+          '1': firstBook.object,
+          '1591104': darkMatterBook.object,
+        };
+        final result = await mirror.getByIds(List<String>.from(expected.keys));
+
+        expect(result, equals(expected.values));
+      });
+
+      test('returns empty array on no results', () async {
+        final mirror = Libgen(client: defaultMockedClient());
+        final result = await mirror.getByIds(['missing']);
+
+        expect(result, equals([]));
+      });
+    });
+
     group('.ping()', () {
       test('returns pong on success', () async {
-        final mirror = mockedLibgenMirror();
+        final mirror = Libgen(client: defaultMockedClient());
         final result = await mirror.ping();
 
         expect(result, equals('pong'));
@@ -79,16 +87,26 @@ void main() {
 
     group('.canDownload', () {
       test('returns false when `options` are missing', () async {
-        final mirror = Libgen(client: client);
+        final mirror = Libgen(client: defaultMockedClient());
 
         expect(mirror.canDownload, equals(false));
       });
 
       test('returns the expected value', () async {
-        expect(mockedLibgenMirror().canDownload, equals(false));
         expect(
-            mockedLibgenMirror(canDownload: false).canDownload, equals(false));
-        expect(mockedLibgenMirror(canDownload: true).canDownload, equals(true));
+          Libgen(
+            client: defaultMockedClient(),
+            options: MirrorOptions(canDownload: false),
+          ).canDownload,
+          equals(false),
+        );
+        expect(
+          Libgen(
+            client: defaultMockedClient(),
+            options: MirrorOptions(canDownload: true),
+          ).canDownload,
+          equals(true),
+        );
       });
     });
   });

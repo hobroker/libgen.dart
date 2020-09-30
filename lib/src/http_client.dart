@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:http/http.dart' hide get;
 import 'package:meta/meta.dart';
 
+import 'exceptions.dart';
+
 @immutable
 class HttpClient extends BaseClient {
   final Client _httpClient;
@@ -40,10 +42,4 @@ class HttpClient extends BaseClient {
   @override
   Future<StreamedResponse> send(BaseRequest request) =>
       _httpClient.send(request);
-}
-
-class HttpException implements Exception {
-  final Response response;
-
-  HttpException(this.response);
 }

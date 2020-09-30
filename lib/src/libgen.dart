@@ -31,18 +31,32 @@ class Libgen extends _AbstactLibgen {
   static Future<Libgen> any() => finder.any();
 
   /// Returns a [Book] by [id]
+  /// Returns [Null] on no result
   @override
-  Future<Book> getById(String id) => _client.request('json.php', query: {
-        'ids': id,
-        'fields': '*',
-      }).then((results) =>
-          results.isNotEmpty ? Book.fromJson(results.first) : null);
+  Future<Book> getById(String id) async {
+    final results = await getByIds([id]);
+
+    if (results.isEmpty == true) {
+      return null;
+    }
+
+    return results.first;
+  }
+
+  /// Returns a [List] of [Book] by [ids]
+  @override
+  Future<List<Book>> getByIds(List<String> ids) async {
+    final results = await _client.request<List>('json.php',
+        query: {'ids': ids.join(','), 'fields': '*'});
+
+    return results.map<Book>((item) => Book.fromJson(item)).toList();
+  }
 
   /// Returns `"pong"` if the request succeeds
   ///
-  /// Throws an [Exception] if the request fails
+  /// Returns [Exception] if the request fails
   @override
-  Future<String> ping() => getById('0').then((e) => 'pong');
+  Future<String> ping() => getById('1').then((e) => 'pong');
 }
 
 @immutable
@@ -57,6 +71,8 @@ abstract class _AbstactLibgen {
   bool get canDownload => _options.canDownload;
 
   Future<Book> getById(String id);
+
+  Future<List<Book>> getByIds(List<String> id);
 
   Future<String> ping();
 }

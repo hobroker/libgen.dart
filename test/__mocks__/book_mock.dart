@@ -2,6 +2,11 @@ import 'package:libgen/src/models/book.dart';
 
 final singleJsonList = [darkMatterBook.json];
 
+final booksById = {
+  '1591104': darkMatterBook,
+  '1': firstBook,
+};
+
 final darkMatterBook = _BookMock({
   'id': '1591104',
   'title': 'Dark Matter',
@@ -62,6 +67,67 @@ final darkMatterBook = _BookMock({
   'btih': '59933e2db4a2f6efbfbcde699d7eb3a33d04f116',
   'torrent':
       'ZDQ6aW5mb2Q2Omxlbmd0aGk0NzgzMjJlNDpuYW1lMzI6N2VhYmVkNjllNWYyNzYyMjExZWM5N2VmOTcyZTg3NjExMjpwaWVjZSBsZW5ndGhpMTY3NzcyMTZlNjpwaWVjZXMyMDoP3thTTNNAaz6ejbJJ8AezppqUrmVl'
+});
+
+final firstBook = _BookMock({
+  'id': '1',
+  'title': 'Handbook of Clinical Drug Data',
+  'volumeinfo': '',
+  'series': '',
+  'periodical': '',
+  'author': 'Philip Anderson',
+  'year': '2001',
+  'edition': '10',
+  'publisher': 'McGraw-Hill Medical',
+  'city': '',
+  'pages': '1163',
+  'language': 'English',
+  'topic': '12',
+  'library': 'Kolxo3',
+  'issue': '17',
+  'identifier': '0-07-136362-9',
+  'issn': '',
+  'asin': '',
+  'udc': '',
+  'lbc': '',
+  'ddc': '',
+  'lcc': '',
+  'doi': '',
+  'googlebookid': '',
+  'openlibraryid': '',
+  'commentary': '',
+  'dpi': '0',
+  'color': '',
+  'cleaned': '',
+  'orientation': '',
+  'paginated': '',
+  'scanned': '',
+  'bookmarked': '',
+  'searchable': '1',
+  'filesize': '3627486',
+  'extension': 'pdf',
+  'md5': '7b2a4d53fde834e801c26a2bab7e0240',
+  'generic': '',
+  'visible': '',
+  'locator':
+      'B_Biology/Handbook of Clinical Drug Data (10th Edition)(1163s).pdf',
+  'local': '0',
+  'timeadded': '2009-07-20 03:45:11',
+  'timelastmodified': '2019-12-21 21:23:21',
+  'coverurl': '0/7b2a4d53fde834e801c26a2bab7e0240.jpg',
+  'identifierwodash': '0071363629',
+  'tags': '',
+  'pagesinfile': '1163',
+  'descr': null,
+  'toc': null,
+  'sha1': null,
+  'sha256': null,
+  'crc32': null,
+  'edonkey': null,
+  'aich': null,
+  'tth': null,
+  'btih': null,
+  'torrent': null
 });
 
 class _BookMock {
