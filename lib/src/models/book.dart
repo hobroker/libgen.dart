@@ -41,8 +41,8 @@ class Book {
         identifier = json['identifier'],
         ext = json['extension'];
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
+  Map<String, String> toJson() => {
+        'id': id.toString(),
         'md5': md5,
         'title': title,
         'author': author,
