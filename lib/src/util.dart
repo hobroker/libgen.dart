@@ -17,3 +17,21 @@ int minNonNullIndex(List list) {
 }
 
 String beautify(Map json) => JsonEncoder.withIndent('  ').convert(json);
+
+String enumValue(Object value) => value.toString().split('').last;
+
+int getResultsCount(int count) {
+  final counts = [25, 50, 100];
+
+  if (count > counts.last) {
+    return counts.last;
+  }
+
+  for (final item in counts) {
+    if (item % count < item) {
+      return item;
+    }
+  }
+
+  return counts.first;
+}

@@ -24,9 +24,9 @@ void main() {
   "title": "zxc"
 }'''));
     });
-  });
 
-  test('returns "null" on null input', () {
-    expect(beautify(null), equals('null'));
+    test('returns [null] on null input', () {
+      expect(beautify(null), equals('null'));
+    });
   });
 }

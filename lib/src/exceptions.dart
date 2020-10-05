@@ -5,3 +5,11 @@ class HttpException implements Exception {
 
   HttpException([this.response]);
 }
+
+class NoAvailableMirrorException implements Exception {
+  factory NoAvailableMirrorException() => Exception('No mirror is available.');
+}
+
+// class NoResultsException implements Exception {
+//   factory NoResultsException() => Exception('Search did not return any results');
+// }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:libgen/src/http_client.dart';
 import 'package:mockito/mockito.dart';
 
@@ -22,3 +24,6 @@ MockHttpClient defaultMockedClient() {
 extension _InvocationArguments on Invocation {
   dynamic named(String name) => namedArguments[Symbol(name)];
 }
+
+Future<String> fileContents(String path) async =>
+    await File(path).readAsString();

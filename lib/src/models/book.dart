@@ -13,6 +13,7 @@ class Book {
   final String publisher;
   final String description;
   final String identifier;
+  final String language;
   final String ext;
 
   const Book({
@@ -25,6 +26,7 @@ class Book {
     this.publisher,
     this.description,
     this.identifier,
+    this.language,
     this.ext,
   })  : assert(id != null, 'id is required'),
         assert(md5 != null, 'md5 is required');
@@ -39,6 +41,7 @@ class Book {
         publisher = json['publisher'],
         description = json['descr'],
         identifier = json['identifier'],
+        language = json['language'],
         ext = json['extension'];
 
   Map<String, String> toJson() => {
@@ -51,6 +54,7 @@ class Book {
         'publisher': publisher,
         'identifier': identifier,
         'extension': ext,
+        'language': language,
         'descr': description,
       };
 
@@ -68,6 +72,7 @@ class Book {
           publisher == other.publisher &&
           description == other.description &&
           identifier == other.identifier &&
+          language == other.language &&
           ext == other.ext;
 
   @override

@@ -1,3 +1,4 @@
+import 'exceptions.dart';
 import 'libgen.dart';
 import 'mirror_schema.dart';
 import 'util.dart';
@@ -36,7 +37,7 @@ class MirrorFinder {
       return _mirrors.elementAt(fastestIdx);
     }
 
-    throw Exception('No working mirror');
+    throw NoAvailableMirrorException();
   }
 
   /// Returns the first [Libgen] that has a successful reply on [Libgen.ping].
@@ -48,6 +49,6 @@ class MirrorFinder {
       }
     }
 
-    throw Exception('No working mirror');
+    throw NoAvailableMirrorException();
   }
 }
