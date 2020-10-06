@@ -11,7 +11,7 @@ void main() {
         // ignore: missing_required_param
         Book(md5: '1');
       } catch (e) {
-        expect(e.message, equals('id is required'));
+        expect(e.message, 'id is required');
       }
     });
 
@@ -20,7 +20,7 @@ void main() {
         // ignore: missing_required_param
         Book(id: 1);
       } catch (e) {
-        expect(e.message, equals('md5 is required'));
+        expect(e.message, 'md5 is required');
       }
     });
 
@@ -28,7 +28,7 @@ void main() {
       test('returns the expected Book instance', () {
         final result = Book.fromJson(darkMatterBook.json);
 
-        expect(result, equals(darkMatterBook.object));
+        expect(result, darkMatterBook.object);
       });
     });
 
@@ -44,6 +44,7 @@ void main() {
           'publisher',
           'identifier',
           'extension',
+          'language',
           'descr',
         ]);
       });
@@ -52,13 +53,13 @@ void main() {
     group('.toString()', () {
       test('returns the expected String', () {
         expect(darkMatterBook.object.toString(),
-            equals('Book ${beautify(darkMatterBook.object.toJson())}'));
+            'Book ${beautify(darkMatterBook.object.toJson())}');
       });
     });
 
     group('.hashCode', () {
       test('returns the expected String', () {
-        expect(darkMatterBook.object.hashCode, equals(230930195));
+        expect(darkMatterBook.object.hashCode, 230930195);
       });
     });
   });

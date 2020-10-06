@@ -40,7 +40,7 @@ void main() {
         final mirror = Libgen(client: defaultMockedClient());
         final result = await mirror.getById(1591104);
 
-        expect(result, equals(darkMatterBook.object));
+        expect(result, darkMatterBook.object);
       });
 
       test('returns null on no results', () async {
@@ -60,14 +60,14 @@ void main() {
         };
         final result = await mirror.getByIds(List<int>.from(expected.keys));
 
-        expect(result, equals(expected.values));
+        expect(result, expected.values);
       });
 
       test('returns empty array on no results', () async {
         final mirror = Libgen(client: defaultMockedClient());
         final result = await mirror.getByIds([-1]);
 
-        expect(result, equals([]));
+        expect(result, []);
       });
     });
 
@@ -76,7 +76,7 @@ void main() {
         final mirror = Libgen(client: defaultMockedClient());
         final result = await mirror.ping();
 
-        expect(result, equals('pong'));
+        expect(result, 'pong');
       });
     });
 
@@ -84,7 +84,7 @@ void main() {
       test('returns false when [options] are missing', () async {
         final mirror = Libgen(client: defaultMockedClient());
 
-        expect(mirror.canDownload, equals(false));
+        expect(mirror.canDownload, isFalse);
       });
 
       test('returns the expected value', () async {
@@ -93,7 +93,7 @@ void main() {
             client: defaultMockedClient(),
             options: MirrorOptions(canDownload: false),
           ).canDownload,
-          equals(false),
+          isFalse,
         );
         expect(
           Libgen(

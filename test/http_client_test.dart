@@ -36,7 +36,7 @@ void main() {
         final client = _mockedClientWithRespoonse(response);
         final result = await client.request('one');
 
-        expect(result, equals(response));
+        expect(result, response);
       });
 
       test('throws HttpException when statusCode is not 200', () async {
@@ -48,7 +48,7 @@ void main() {
           assert(false);
         } catch (exception) {
           expect(exception is HttpException, isTrue);
-          expect(exception.response.body, equals(response.toString()));
+          expect(exception.response.body, response.toString());
         }
       });
     });
