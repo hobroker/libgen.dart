@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import 'constants.dart';
-import 'exceptions.dart';
 import 'http_client.dart';
 import 'list_extension.dart';
 import 'mirror_finder.dart';
