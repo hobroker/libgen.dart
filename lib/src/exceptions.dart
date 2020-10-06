@@ -7,7 +7,9 @@ class HttpException implements Exception {
 }
 
 class NoAvailableMirrorException implements Exception {
-  factory NoAvailableMirrorException() => Exception('No mirror is available.');
+  final String message = 'No mirror is available.';
+
+  NoAvailableMirrorException();
 }
 
 // class NoResultsException implements Exception {
