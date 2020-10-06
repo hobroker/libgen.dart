@@ -13,25 +13,25 @@ void main() {
       test('creates a new [Libgen] from [MirrorSchema]', () async {
         final mirror = Libgen.fromSchema(workingSchemaSample);
 
-        expect(mirror is Libgen, equals(true));
+        expect(mirror is Libgen, isTrue);
       });
     });
 
     group('.finder', () {
       test('returns a [MirrorFinder] instance', () async {
-        expect(Libgen.finder is MirrorFinder, equals(true));
+        expect(Libgen.finder is MirrorFinder, isTrue);
       });
     });
 
     group('.fastest', () {
       test('returns a [Libgen] instance', () async {
-        expect(await Libgen.fastest() is Libgen, equals(true));
+        expect(await Libgen.fastest() is Libgen, isTrue);
       });
     });
 
     group('.any', () {
       test('returns a [Libgen] instance', () async {
-        expect(await Libgen.any() is Libgen, equals(true));
+        expect(await Libgen.any() is Libgen, isTrue);
       });
     });
 
@@ -47,7 +47,7 @@ void main() {
         final mirror = Libgen(client: defaultMockedClient());
         final result = await mirror.getById(-1);
 
-        expect(result, equals(null));
+        expect(result, isNull);
       });
     });
 
@@ -100,7 +100,7 @@ void main() {
             client: defaultMockedClient(),
             options: MirrorOptions(canDownload: true),
           ).canDownload,
-          equals(true),
+          isTrue,
         );
       });
     });

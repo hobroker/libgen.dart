@@ -1,3 +1,4 @@
+import 'package:libgen/src/exceptions.dart';
 import 'package:libgen/src/libgen.dart';
 import 'package:libgen/src/mirror_finder.dart';
 import 'package:libgen/src/mirrors.dart';
@@ -26,11 +27,10 @@ void main() {
     };
 
     test('.fromSchemas() returns a [MirrorFinder] instance', () {
-      expect(MirrorFinder.fromSchemas(mirrorSchemas) is MirrorFinder,
-          equals(true));
+      expect(MirrorFinder.fromSchemas(mirrorSchemas) is MirrorFinder, isTrue);
       expect(MirrorFinder.fromSchemas([workingSchemaSample]) is MirrorFinder,
-          equals(true));
-      expect(MirrorFinder.fromSchemas([]) is MirrorFinder, equals(true));
+          isTrue);
+      expect(MirrorFinder.fromSchemas([]) is MirrorFinder, isTrue);
     });
 
     group('.fastest()', () {
@@ -48,7 +48,7 @@ void main() {
           await finder.fastest();
           assert(false);
         } catch (e) {
-          expect(e is Exception, equals(true));
+          expect(e is NoAvailableMirrorException, isTrue);
         }
       });
     });
@@ -74,7 +74,7 @@ void main() {
           await finder.any();
           assert(false);
         } catch (e) {
-          expect(e is Exception, equals(true));
+          expect(e is NoAvailableMirrorException, isTrue);
         }
       });
     });

@@ -10,8 +10,8 @@ void main() {
     });
 
     test('returns null', () async {
-      expect(minNonNullIndex([]), equals(null));
-      expect(minNonNullIndex([null, null]), equals(null));
+      expect(minNonNullIndex([]), isNull);
+      expect(minNonNullIndex([null, null]), isNull);
     });
   });
 

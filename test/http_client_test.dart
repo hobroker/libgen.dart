@@ -19,7 +19,7 @@ void main() {
       final uri = Uri(scheme: 'https', host: 'example.com');
       final request = await client.send(Request('get', uri));
 
-      expect(request is StreamedResponse, equals(true));
+      expect(request is StreamedResponse, isTrue);
     });
 
     test('accepts a [client]', () async {
@@ -27,7 +27,7 @@ void main() {
       final client = HttpClient(client: _client);
       final request = await client.send(Request('get', Uri()));
 
-      expect(request is StreamedResponse, equals(true));
+      expect(request is StreamedResponse, isTrue);
     });
 
     group('.request', () {
@@ -47,7 +47,7 @@ void main() {
           await client.request('one');
           assert(false);
         } catch (exception) {
-          expect(exception is HttpException, equals(true));
+          expect(exception is HttpException, isTrue);
           expect(exception.response.body, equals(response.toString()));
         }
       });
