@@ -23,5 +23,8 @@ test.coverage: ## Run tests with coverage
 coverage.html: ## Generate HTML view for coverage
 	genhtml -o coverage coverage/lcov.info
 
+html_mock.update: ## TODO update the html files
+	echo "TODO"
+
 .PHONY: help
 .PHONY: test
