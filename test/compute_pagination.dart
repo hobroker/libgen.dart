@@ -35,7 +35,7 @@ void main() {
     });
 
     group('multiple pages', () {
-      test('without offset', () {
+      test('2 without offset', () {
         final nav = computePagination(120);
 
         expect(nav, [
@@ -51,6 +51,26 @@ void main() {
             page: 2,
             ignoreFirst: 0,
             ignoreLast: 5,
+            hasNext: false,
+          ),
+        ]);
+      });
+      test('2 with offset', () {
+        final nav = computePagination(120, offset: 70);
+
+        expect(nav, [
+          PageData(
+            limit: 100,
+            page: 2,
+            ignoreLast: 0,
+            ignoreFirst: 20,
+            hasNext: true,
+          ),
+          PageData(
+            limit: 50,
+            page: 3,
+            ignoreLast: 10,
+            ignoreFirst: 0,
             hasNext: false,
           ),
         ]);

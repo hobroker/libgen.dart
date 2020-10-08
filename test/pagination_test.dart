@@ -86,7 +86,7 @@ void main() {
     });
 
     group('multiple pages', () {
-      test('without offset', () {
+      test('2 without offset', () {
         final pagination = Pagination(120);
 
         expect(pagination.limit, 100);
@@ -104,7 +104,7 @@ void main() {
         expect(pagination.hasNext, isFalse);
       });
 
-      test('with offset', () {
+      test('2 with offset', () {
         final pagination = Pagination(120, offset: 30);
 
         expect(pagination.limit, 100);
@@ -122,7 +122,7 @@ void main() {
         expect(pagination.hasNext, isFalse);
       });
 
-      test('three pages with offset', () {
+      test('3 with offset', () {
         final pagination = Pagination(201, offset: 301);
 
         expect(pagination.limit, 100);
