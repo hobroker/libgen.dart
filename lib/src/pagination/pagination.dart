@@ -22,13 +22,13 @@ class Pagination {
   /// current offset
   int _offset;
 
-  /// current page limit
-  int _limit;
-
   /// current page number
   int _page = 1;
 
-  /// the number of items that have been fetched (useful or ignored ones)
+  /// current page limit
+  int _limit;
+
+  /// sum of [_limit]
   int _sink = 0;
 
   /// Required [total] number of items and optionally accepts an [offset].
