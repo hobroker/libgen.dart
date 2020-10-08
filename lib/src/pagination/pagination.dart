@@ -65,8 +65,7 @@ class Pagination {
     _offset = _initOffset;
     _count = min(_MAX_PAGE_SIZE, total - _countSum);
 
-    final startsOnFirstPage = _offset < 25;
-    if (!startsOnFirstPage) {
+    if (_offset >= _MIN_PAGE_SIZE) {
       while (_offset > 0) {
         final localLimit = _computeLimit(_offset, true);
         if (_offset - localLimit < 0) {
