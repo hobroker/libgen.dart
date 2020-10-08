@@ -95,7 +95,7 @@ int _computeLimit(int count, [bool lower = false]) {
     return _MAX_PAGE_SIZE;
   }
 
-  for (var idx = 0; idx < _PAGE_SIZES.length; idx++) {
+  for (var idx = 0; idx < _PAGE_SIZES.length - 1; idx++) {
     final item = _PAGE_SIZES[idx];
     final div = count / item;
 
@@ -108,5 +108,5 @@ int _computeLimit(int count, [bool lower = false]) {
     }
   }
 
-  return _MIN_PAGE_SIZE;
+  return _MAX_PAGE_SIZE;
 }
