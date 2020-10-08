@@ -1,8 +1,6 @@
 import 'dart:math';
 
-const _PAGE_SIZES = [25, 50, 100];
-final _MIN_PAGE_SIZE = _PAGE_SIZES.first;
-final _MAX_PAGE_SIZE = _PAGE_SIZES.last;
+const _pageSizes = [25, 50, 100];
 
 /// The point of this class is to calculate the optimal [page] and [limit]
 /// needed for the Libgen API.
@@ -57,15 +55,15 @@ class Pagination {
 
     _offset = 0;
     _page++;
-    _count = min(_MAX_PAGE_SIZE, total - _countSum);
+    _count = min(_pageSizes.last, total - _countSum);
     _countWasUpdated();
   }
 
   void _computeFirstPage() {
     _offset = _initOffset;
-    _count = min(_MAX_PAGE_SIZE, total - _countSum);
+    _count = min(_pageSizes.last, total - _countSum);
 
-    if (_offset >= _MIN_PAGE_SIZE) {
+    if (_offset >= _pageSizes.first) {
       while (_offset > 0) {
         final localLimit = _computeLimit(_offset, true);
         if (_offset - localLimit < 0) {
@@ -75,7 +73,7 @@ class Pagination {
         _page++;
         _sink += localLimit;
       }
-      if (total > _MIN_PAGE_SIZE) {
+      if (total > _pageSizes.first) {
         _count -= _offset;
       }
     }
@@ -91,22 +89,22 @@ class Pagination {
 }
 
 int _computeLimit(int count, [bool lower = false]) {
-  if (count > _MAX_PAGE_SIZE) {
-    return _MAX_PAGE_SIZE;
+  if (count > _pageSizes.last) {
+    return _pageSizes.last;
   }
 
-  for (var idx = 0; idx < _PAGE_SIZES.length - 1; idx++) {
-    final item = _PAGE_SIZES[idx];
+  for (var idx = 0; idx < _pageSizes.length - 1; idx++) {
+    final item = _pageSizes[idx];
     final div = count / item;
 
     if (div <= 1) {
       if (lower && idx > 0 && div != 1) {
-        return _PAGE_SIZES[idx - 1];
+        return _pageSizes[idx - 1];
       }
 
       return item;
     }
   }
 
-  return _MAX_PAGE_SIZE;
+  return _pageSizes.last;
 }
