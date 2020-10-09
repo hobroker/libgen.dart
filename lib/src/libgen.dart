@@ -8,6 +8,7 @@ import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
 import 'models/search.dart';
+import 'pagination/compute_pagination.dart';
 import 'parser.dart';
 import 'util.dart';
 
@@ -15,10 +16,10 @@ import 'util.dart';
 class Libgen extends _AbstactLibgen {
   final HttpClient _client;
 
-  const Libgen({
-    @required HttpClient client,
+  Libgen({
+    HttpClient client,
     MirrorOptions options = const MirrorOptions(),
-  })  : _client = client,
+  })  : _client = client ?? HttpClient(baseUri: mirrorSchemas.first.baseUri),
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)
@@ -46,8 +47,7 @@ class Libgen extends _AbstactLibgen {
   /// Returns a [List] of [Book] by [ids]
   @override
   Future<List<Book>> getByIds(List<int> ids) async {
-    final results = await _client.request<List>('json.php',
-        query: {'ids': ids.join(','), 'fields': searchFields});
+    final results = await _json(ids);
 
     return results.map<Book>((item) => Book.fromJson(item)).toList();
   }
@@ -61,29 +61,39 @@ class Libgen extends _AbstactLibgen {
     SearchColumn searchIn,
     bool reverse = false,
   }) async {
-    final body = await _client.requestRaw('search.php', query: {
+    final idsAcc = <int>[];
+    final nav = computePagination(count, offset: offset);
+    final defaultParams = {
       'req': text,
       'view': 'simple',
-      // 'page': 'page',
       'column': enumValue(searchIn),
       'sort': enumValue(sortBy),
       'sortmode': reverse ? 'DESC' : 'ASC',
-      'res': getResultsCount(count).toString(),
-    });
+    };
 
-    final parser = LibgenPageParser(body);
+    for (final page in nav) {
+      final query = {
+        'page': page.page.toString(),
+        'res': page.limit.toString(),
+      }..addAll(defaultParams);
+      final data = await _search(query);
+      var ids = data.ids.toList();
+      ids
+        ..removeRange(0, page.ignoreFirst)
+        ..removeRange(ids.length - page.ignoreLast, ids.length);
 
-    return getByIds(parser.ids);
+      idsAcc.addAll(ids);
+    }
+
+    return getByIds(idsAcc);
   }
 
   /// Returns the latest [Book.id]
   @override
   Future<int> getLatestId() async {
-    final body =
-        await _client.requestRaw('search.php', query: {'mode': 'last'});
-    final parser = LibgenPageParser(body);
+    final data = await _search({'mode': 'last'});
 
-    return parser.firstId;
+    return data.firstId;
   }
 
   /// Returns the latest [Book.md5]
@@ -106,6 +116,14 @@ class Libgen extends _AbstactLibgen {
     await getById(1);
 
     return 'pong';
+  }
+
+  Future<List> _json(List ids) => _client.request<List>('json.php',
+      query: {'ids': ids.join(','), 'fields': searchFields});
+
+  Future<LibgenPageParser> _search(Map<String, String> query) async {
+    final body = await _client.requestRaw('search.php', query: query);
+    return LibgenPageParser(body);
   }
 }
 
