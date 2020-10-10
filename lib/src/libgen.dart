@@ -8,8 +8,8 @@ import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
 import 'models/search.dart';
-import 'pagination/compute_pagination.dart';
 import 'parser.dart';
+import 'search/libgen_search.dart';
 import 'util.dart';
 
 @immutable
@@ -59,30 +59,19 @@ class Libgen extends _AbstactLibgen {
     int offset = 0,
     SearchSortBy sortBy,
     SearchColumn searchIn,
-    bool reverse = false,
+    bool asc = true,
   }) async {
-    final idsAcc = <int>[];
-    final nav = computePagination(count, offset: offset);
-    final defaultParams = {
-      'req': text,
-      'view': 'simple',
-      'column': enumValue(searchIn),
-      'sort': enumValue(sortBy),
-      'sortmode': reverse ? 'DESC' : 'ASC',
-    };
+    final libgenSearch = LibgenSearch(
+      text: text,
+      count: count,
+      offset: offset,
+      sortBy: enumValue(sortBy),
+      searchIn: enumValue(searchIn),
+      asc: asc,
+    );
+    final ids = await libgenSearch.run(_search);
 
-    for (final page in nav) {
-      final query = {
-        'page': page.page.toString(),
-        'res': page.limit.toString(),
-      }..addAll(defaultParams);
-      final data = await _search(query);
-      final ids = data.ids.drop(page.ignoreFirst, page.ignoreLast);
-
-      idsAcc.addAll(ids);
-    }
-
-    return getByIds(idsAcc);
+    return getByIds(ids);
   }
 
   /// Returns the latest [Book.id]
@@ -143,11 +132,11 @@ abstract class _AbstactLibgen {
 
   Future<List<Book>> search({
     @required String text,
-    int count = 25,
-    int offset = 0,
+    int count,
+    int offset,
     SearchSortBy sortBy,
     SearchColumn searchIn,
-    bool reverse = false,
+    bool asc,
   });
 
   Future<Book> getLatest();

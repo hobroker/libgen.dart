@@ -1,9 +1,9 @@
 class PageOptions {
   /// The page size for Ligen API
-  final int limit;
+  final String limit;
 
   /// The page number for Libgen API
-  final int page;
+  final String page;
 
   /// The number of items the client should ignore at the end of the [List]
   final int ignoreLast;
@@ -15,12 +15,13 @@ class PageOptions {
   final bool hasNext;
 
   PageOptions({
-    this.limit,
-    this.page,
+    int page,
+    int limit,
     this.ignoreLast,
     this.ignoreFirst,
     this.hasNext,
-  });
+  })  : page = page.toString(),
+        limit = limit.toString();
 
   @override
   bool operator ==(Object other) =>

@@ -21,6 +21,5 @@ void main() async {
     text: 'dark matter',
     count: 2,
     searchIn: SearchColumn.title,
-    reverse: true,
   ));
 }
