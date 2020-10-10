@@ -62,15 +62,15 @@ void main() {
           PageData(
             limit: 100,
             page: 2,
-            ignoreLast: 0,
             ignoreFirst: 20,
+            ignoreLast: 0,
             hasNext: true,
           ),
           PageData(
             limit: 50,
             page: 3,
-            ignoreLast: 10,
             ignoreFirst: 0,
+            ignoreLast: 10,
             hasNext: false,
           ),
         ]);
