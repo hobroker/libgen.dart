@@ -74,14 +74,12 @@ class Libgen extends _AbstactLibgen {
     @required String text,
     int count = 25,
     int offset = 0,
-    SearchSortBy sortBy,
     SearchColumn searchIn,
   }) async {
     final libgenSearch = LibgenSearch(
       text: text,
       count: count,
       offset: offset,
-      sortBy: enumValue(sortBy),
       searchIn: enumValue(searchIn),
     );
     final ids = await libgenSearch.run(_api.search);
@@ -129,7 +127,6 @@ abstract class _AbstactLibgen {
     @required String text,
     int count,
     int offset,
-    SearchSortBy sortBy,
     SearchColumn searchIn,
   });
 
