@@ -57,6 +57,13 @@ void main() {
 
         expect(result, isNull);
       });
+
+      test('returns null when null is the [id]', () async {
+        final mirror = Libgen(client: defaultMockedClient());
+        final result = await mirror.getById(null);
+
+        expect(result, isNull);
+      });
     });
 
     group('.getByIds()', () {
