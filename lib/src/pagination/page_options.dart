@@ -1,6 +1,4 @@
-import '../util.dart';
-
-class PageData {
+class PageOptions {
   /// The page size for Ligen API
   final int limit;
 
@@ -16,7 +14,7 @@ class PageData {
   /// True if there are more pages to fetch
   final bool hasNext;
 
-  PageData({
+  PageOptions({
     this.limit,
     this.page,
     this.ignoreLast,
@@ -24,28 +22,14 @@ class PageData {
     this.hasNext,
   });
 
-  Map<String, dynamic> toJson() => {
-        'limit': limit,
-        'page': page,
-        'ignoreLast': ignoreLast,
-        'ignoreFirst': ignoreFirst,
-        'hasNext': hasNext,
-      };
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PageData &&
+      other is PageOptions &&
           runtimeType == other.runtimeType &&
           limit == other.limit &&
           page == other.page &&
           ignoreLast == other.ignoreLast &&
           ignoreFirst == other.ignoreFirst &&
           hasNext == other.hasNext;
-
-  @override
-  int get hashCode => super.hashCode;
-
-  @override
-  String toString() => '$runtimeType ${beautify(toJson())}';
 }
