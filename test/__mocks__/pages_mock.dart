@@ -1,4 +1,5 @@
-import '../utils.dart';
+import 'package:http/http.dart' as http;
 
-Future<String> get searchPage =>
-    fileContents('test/__snapshots__/search-latest-page.html');
+Future<String> get searchPage => http
+    .get('http://libgen.rs/search.php?req=something')
+    .then((res) => res.body);
