@@ -77,10 +77,7 @@ class Libgen extends _AbstactLibgen {
         'res': page.limit.toString(),
       }..addAll(defaultParams);
       final data = await _search(query);
-      var ids = data.ids.toList();
-      ids
-        ..removeRange(0, page.ignoreFirst)
-        ..removeRange(ids.length - page.ignoreLast, ids.length);
+      final ids = data.ids.drop(page.ignoreFirst, page.ignoreLast);
 
       idsAcc.addAll(ids);
     }
