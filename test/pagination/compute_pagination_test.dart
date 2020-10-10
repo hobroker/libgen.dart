@@ -1,5 +1,5 @@
 import 'package:libgen/src/pagination/compute_pagination.dart';
-import 'package:libgen/src/pagination/pagination_options.dart';
+import 'package:libgen/src/pagination/page_options.dart';
 import 'package:test/test.dart';
 
 void main() {
