@@ -14,7 +14,6 @@ class LibgenSearch {
   final int offset;
   final String sortBy;
   final String searchIn;
-  final bool asc;
   final List<PageOptions> _nav;
 
   LibgenSearch({
@@ -23,14 +22,12 @@ class LibgenSearch {
     this.offset,
     this.sortBy,
     this.searchIn,
-    this.asc,
   }) : _nav = computePagination(count, offset: offset);
 
   Map<String, String> get defaultParams => {
         'req': text,
         'column': searchIn,
         'sort': sortBy,
-        'sortmode': asc ? 'ASC' : 'DESC',
         'view': 'simple',
       };
 
