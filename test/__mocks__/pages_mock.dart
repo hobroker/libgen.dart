@@ -5,8 +5,12 @@ Future<String> getSearchPage() => http
     .then((res) => res.body);
 
 String getHtmlPageWithIds(List<int> ids) => '''
+  <html>
+    <body>
     <table class="c">
       <tr><td>ID</td></tr>
       ${ids.map((id) => '<tr><td>${id}</td></tr>')}
     </table>
+    </body>
+  </html>
   ''';
