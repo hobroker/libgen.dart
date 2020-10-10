@@ -9,6 +9,12 @@ import 'utils.dart';
 
 void main() {
   group('Libgen', () {
+    test('default mirror works', () async {
+      final mirror = Libgen();
+
+      expect(await mirror.ping(), 'pong');
+    });
+
     group('.fromSchema()', () {
       test('creates a new [Libgen] from [MirrorSchema]', () async {
         final mirror = Libgen.fromSchema(workingSchemaSample);
