@@ -96,7 +96,7 @@ class Libgen extends _AbstactLibgen {
     return data.firstId;
   }
 
-  /// Returns the latest [Book.md5]
+  /// Returns the latest [Book]
   @override
   Future<Book> getLatest() async {
     final id = await getLatestId();
@@ -118,8 +118,10 @@ class Libgen extends _AbstactLibgen {
     return 'pong';
   }
 
-  Future<List> _json(List ids) => _client.request<List>('json.php',
-      query: {'ids': ids.join(','), 'fields': searchFields});
+  Future<List> _json(List ids) => _client.request<List>('json.php', query: {
+        'ids': ids.join(','),
+        'fields': searchFields,
+      });
 
   Future<LibgenPageParser> _search(Map<String, String> query) async {
     final body = await _client.requestRaw('search.php', query: query);

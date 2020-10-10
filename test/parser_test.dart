@@ -3,47 +3,47 @@ import 'package:test/test.dart';
 
 import '__mocks__/pages_mock.dart';
 
-void main() {
+void main() async {
+  final html = await searchPage;
   group('LibgenPageParser', () {
-    test('returns the expected index', () async {
-      final html = await searchPage;
+    test('returns the expected index', () {
       final parser = LibgenPageParser(html);
 
       expect(
           parser.ids,
           equals([
-            2761887,
-            2761886,
-            2761885,
-            2761884,
-            2761883,
-            2761882,
-            2761881,
-            2761880,
-            2761879,
-            2761878,
-            2761877,
-            2761876,
-            2761875,
-            2761874,
-            2761873,
-            2761872,
-            2761871,
-            2761870,
-            2761869,
-            2761868,
-            2761867,
-            2761866,
-            2761865,
-            2761864,
-            2761863
+            2776773,
+            2776772,
+            2776771,
+            2776770,
+            2776769,
+            2776768,
+            2776767,
+            2776766,
+            2776765,
+            2776764,
+            2776763,
+            2776762,
+            2776761,
+            2776760,
+            2776759,
+            2776758,
+            2776757,
+            2776756,
+            2776755,
+            2776754,
+            2776753,
+            2776752,
+            2776751,
+            2776750,
+            2776749
           ]));
     });
-    test('returns the expected .firstId', () async {
-      final html = await searchPage;
+
+    test('returns the expected .firstId', () {
       final parser = LibgenPageParser(html);
 
-      expect(parser.firstId, equals(2761887));
+      expect(parser.firstId, equals(2776773));
     });
   });
 }
