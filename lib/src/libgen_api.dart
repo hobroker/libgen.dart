@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 import 'constants.dart';
 import 'http_client.dart';
-import 'parser.dart';
+import 'page_parser.dart';
 
 @immutable
 class LibgenApi {
@@ -19,8 +19,8 @@ class LibgenApi {
       });
 
   /// Requests /search.php with [query[
-  Future<LibgenPageParser> search(Map<String, String> query) async {
+  Future<PageParser> search(Map<String, String> query) async {
     final body = await _client.requestRaw('search.php', query: query);
-    return LibgenPageParser(body);
+    return PageParser(body);
   }
 }

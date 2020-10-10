@@ -1,11 +1,11 @@
 import 'package:meta/meta.dart';
 
 import '../list_extension.dart';
-import '../parser.dart';
+import '../page_parser.dart';
 import 'compute_pagination.dart';
 import 'page_options.dart';
 
-typedef SearchRequest = Future<LibgenPageParser> Function(Map<String, String>);
+typedef SearchRequest = Future<PageParser> Function(Map<String, String>);
 
 @immutable
 class LibgenSearch {

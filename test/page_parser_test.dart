@@ -1,4 +1,4 @@
-import 'package:libgen/src/parser.dart';
+import 'package:libgen/src/page_parser.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/pages_mock.dart';
@@ -7,7 +7,7 @@ void main() async {
   final html = await getSearchPage();
   group('LibgenPageParser', () {
     test('returns the expected list of ids from a fetched page', () {
-      final parser = LibgenPageParser(html);
+      final parser = PageParser(html);
 
       expect(parser.ids, [
         62088,
@@ -40,13 +40,13 @@ void main() async {
 
     test('returns the expected list from HTML String', () {
       final ids = [1, 2, 3];
-      final parser = LibgenPageParser(getHtmlPageWithIds(ids));
+      final parser = PageParser(getHtmlPageWithIds(ids));
 
       expect(parser.ids, ids);
     });
 
     test('returns the expected .firstId', () {
-      final parser = LibgenPageParser(html);
+      final parser = PageParser(html);
 
       expect(parser.firstId, 62088);
     });
