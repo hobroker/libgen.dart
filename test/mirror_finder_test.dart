@@ -27,7 +27,7 @@ void main() {
       when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
     };
 
-    group('.fastest()', () {
+    group('.fromSchemas()', () {
       test('returns a [MirrorFinder] instance from mocked schemas', () {
         expect(MirrorFinder.fromSchemas([workingSchemaSample]) is MirrorFinder,
             isTrue);
