@@ -18,7 +18,7 @@ void main() async {
   // print(await libgen.getLatestMd5());
   // print(await libgen.getLatest());
   printList(await libgen.search(
-    text: 'dark matter',
+    query: 'dark matter',
     count: 2,
     searchIn: SearchColumn.title,
   ));

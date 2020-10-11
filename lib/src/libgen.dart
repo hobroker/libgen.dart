@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import 'http_client.dart';
-import 'libgen_api.dart';
 import 'list_extension.dart';
 import 'mirror_finder.dart';
 import 'mirror_schema.dart';
@@ -11,20 +10,20 @@ import 'models/search.dart';
 import 'search/libgen_search.dart';
 import 'util.dart';
 
+part 'libgen.abstract.dart';
+
 @immutable
 class Libgen extends _AbstactLibgen {
-  final LibgenApi _api;
+  final HttpClient _client;
 
   Libgen({
     HttpClient client,
     MirrorOptions options = const MirrorOptions(),
-  })  : _api = LibgenApi(
-          client: client ?? HttpClient(baseUri: mirrorSchemas.first.baseUri),
-        ),
+  })  : _client = client ?? HttpClient(baseUri: mirrorSchemas.first.baseUri),
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)
-      : _api = LibgenApi(client: HttpClient(baseUri: schema.baseUri)),
+      : _client = HttpClient(baseUri: schema.baseUri),
         super(options: schema.options);
 
   static MirrorFinder get finder => MirrorFinder.fromSchemas(mirrorSchemas);
@@ -52,7 +51,7 @@ class Libgen extends _AbstactLibgen {
   @override
   Future<List<Book>> getByIds(List<int> ids) async {
     final list = <Book>[];
-    final results = await _api.json(ids);
+    final results = await _client.json(ids);
     final byId = results.fold<Map<int, Book>>({}, (acc, item) {
       acc[int.parse(item['id'])] = Book.fromJson(item);
 
@@ -69,20 +68,21 @@ class Libgen extends _AbstactLibgen {
     return list;
   }
 
+  /// Search in [seachIn] by [query]
   @override
   Future<List<Book>> search({
-    @required String text,
+    @required String query,
     int count = 25,
     int offset = 0,
     SearchColumn searchIn,
   }) async {
     final libgenSearch = LibgenSearch(
-      text: text,
+      query: query,
       count: count,
       offset: offset,
       searchIn: enumValue(searchIn),
     );
-    final ids = await libgenSearch.run(_api.search);
+    final ids = await libgenSearch.run(_client.search);
 
     return getByIds(ids);
   }
@@ -90,7 +90,7 @@ class Libgen extends _AbstactLibgen {
   /// Returns the latest [Book.id]
   @override
   Future<int> getLatestId() async {
-    final data = await _api.search({'mode': 'last'});
+    final data = await _client.search({'mode': 'last'});
 
     return data.firstId;
   }
@@ -106,33 +106,4 @@ class Libgen extends _AbstactLibgen {
 
     return 'pong';
   }
-}
-
-@immutable
-abstract class _AbstactLibgen {
-  final MirrorOptions _options;
-
-  const _AbstactLibgen({
-    MirrorOptions options,
-  }) : _options = options;
-
-  /// Returns the internal [_options.canDownload].
-  bool get canDownload => _options.canDownload;
-
-  Future<Book> getById(int id);
-
-  Future<List<Book>> getByIds(List<int> id);
-
-  Future<List<Book>> search({
-    @required String text,
-    int count,
-    int offset,
-    SearchColumn searchIn,
-  });
-
-  Future<Book> getLatest();
-
-  Future<int> getLatestId();
-
-  Future<String> ping();
 }
