@@ -44,7 +44,7 @@ void main() {
       setUp(_reset);
 
       test('returns the expected [Libgen] instance', () async {
-        expect(await finder.fastest(), equals(workingMirror));
+        expect(await finder.fastest(), workingMirror);
       });
 
       test('throws an [Exception] when all mirrros throw', () async {
@@ -64,11 +64,11 @@ void main() {
       setUp(_reset);
 
       test('returns the expected [Libgen] instance', () async {
-        expect(await finder.any(), equals(workingMirror));
+        expect(await finder.any(), workingMirror);
       });
 
       test('does not call the other mirror once it finds one', () async {
-        expect(await finder.any(), equals(workingMirror));
+        expect(await finder.any(), workingMirror);
 
         verifyZeroInteractions(brokenMirror);
       });
