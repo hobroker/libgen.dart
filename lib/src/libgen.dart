@@ -21,7 +21,7 @@ class Libgen extends _AbstactLibgen {
   Libgen({
     HttpClient client,
     MirrorOptions options = const MirrorOptions(),
-  })  : _client = client ?? HttpClient(baseUri: mirrorSchemas.first.baseUri),
+  })  : _client = client ?? LibgenApi.fromSchema(mirrorSchemas.first),
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)

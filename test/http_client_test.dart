@@ -34,7 +34,7 @@ void main() {
       test('returns the expected response', () async {
         final response = {'id': '1'};
         final client = _mockedClientWithRespoonse(response);
-        final result = await client.request('one');
+        final result = await client.get('one');
 
         expect(result, response);
       });
@@ -44,7 +44,7 @@ void main() {
         final client = _mockedClientWithRespoonse(response, 500);
 
         try {
-          await client.request('one');
+          await client.get('one');
           assert(false);
         } catch (exception) {
           expect(exception is HttpException, isTrue);

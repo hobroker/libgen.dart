@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:http/http.dart' hide get;
 import 'package:meta/meta.dart';
@@ -7,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'exceptions.dart';
 
 @immutable
-class HttpClient extends BaseClient {
+class HttpClient {
   final Client client;
   final Uri baseUri;
 
@@ -18,25 +17,12 @@ class HttpClient extends BaseClient {
 
   /// Sends an HTTP GET request to [baseUri] with the
   /// required [path] and optional [query] and [headers]
-  Future<T> request<T>(
-    String path, {
+  Future<String> get(
+    String path, [
     Map<String, String> query,
-    Map<String, String> headers,
-  }) async {
-    final body = await requestRaw(path, query: query, headers: headers);
-
-    return JsonDecoder().convert(body);
-  }
-
-  /// Sends an HTTP GET request to [baseUri] with the
-  /// required [path] and optional [query] and [headers]
-  Future<String> requestRaw(
-    String path, {
-    Map<String, String> query,
-    Map<String, String> headers,
-  }) async {
+  ]) async {
     final url = baseUri?.replace(path: path, queryParameters: query);
-    final response = await get(url, headers: headers);
+    final response = await client.get(url);
     if (response.statusCode != 200) {
       throw HttpException(response);
     }
@@ -49,8 +35,4 @@ class HttpClient extends BaseClient {
 
     return body;
   }
-
-  /// Sends an HTTP request and asynchronously returns the response.
-  @override
-  Future<StreamedResponse> send(BaseRequest request) => client.send(request);
 }
