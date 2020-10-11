@@ -7,6 +7,7 @@ import 'package:test/test.dart';
 import '__mocks__/book_mock.dart';
 import '__mocks__/pages_mock.dart';
 import '__mocks__/schema_mock.dart';
+import 'constants.dart';
 import 'utils.dart';
 
 void main() {
@@ -15,7 +16,7 @@ void main() {
       final mirror = Libgen();
 
       expect(await mirror.ping(), 'pong');
-    });
+    }, tags: HTTP);
 
     group('.fromSchema()', () {
       test('creates a new [Libgen] from [MirrorSchema]', () async {
@@ -34,13 +35,13 @@ void main() {
     group('.fastest', () {
       test('returns a [Libgen] instance', () async {
         expect(await Libgen.fastest() is Libgen, isTrue);
-      });
+      }, tags: HTTP);
     });
 
     group('.any', () {
       test('returns a [Libgen] instance', () async {
         expect(await Libgen.any() is Libgen, isTrue);
-      });
+      }, tags: HTTP);
     });
 
     group('.getById()', () {

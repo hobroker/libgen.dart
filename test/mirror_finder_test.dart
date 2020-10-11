@@ -7,6 +7,7 @@ import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
 import '__mocks__/schema_mock.dart';
+import 'constants.dart';
 
 // ignore: must_be_immutable
 class MockLibgen extends Mock implements Libgen {}
@@ -26,11 +27,16 @@ void main() {
       when(brokenMirror.ping()).thenAnswer((_) async => throw Exception());
     };
 
-    test('.fromSchemas() returns a [MirrorFinder] instance', () {
-      expect(MirrorFinder.fromSchemas(mirrorSchemas) is MirrorFinder, isTrue);
-      expect(MirrorFinder.fromSchemas([workingSchemaSample]) is MirrorFinder,
-          isTrue);
-      expect(MirrorFinder.fromSchemas([]) is MirrorFinder, isTrue);
+    group('.fastest()', () {
+      test('returns a [MirrorFinder] instance from mocked schemas', () {
+        expect(MirrorFinder.fromSchemas([workingSchemaSample]) is MirrorFinder,
+            isTrue);
+        expect(MirrorFinder.fromSchemas([]) is MirrorFinder, isTrue);
+      });
+
+      test('returns a [MirrorFinder] instance from real schemas', () {
+        expect(MirrorFinder.fromSchemas(mirrorSchemas) is MirrorFinder, isTrue);
+      }, tags: HTTP);
     });
 
     group('.fastest()', () {
