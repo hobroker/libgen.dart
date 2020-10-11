@@ -97,8 +97,8 @@ void main() {
 
     group('.getLatestId()', () {
       test('returns the expected first id from the list', () async {
-        final client = MockHttpClient();
-        when(client.requestRaw('search.php', query: anyNamed('query')))
+        final client = MockLibgenApi();
+        when(client.search(any))
             .thenAnswer((_) async => getHtmlPageWithIds([1, 2]));
 
         final mirror = Libgen(client: client);
@@ -111,7 +111,7 @@ void main() {
     group('.getLatest()', () {
       test('returns the expected first id from the list', () async {
         final client = defaultMockedClient();
-        when(client.requestRaw('search.php', query: anyNamed('query')))
+        when(client.search(any))
             .thenAnswer((_) async => getHtmlPageWithIds([1]));
 
         final mirror = Libgen(client: client);

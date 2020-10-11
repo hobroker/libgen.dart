@@ -1,12 +1,14 @@
 import 'package:meta/meta.dart';
 
 import 'http_client.dart';
+import 'libgen_api.dart';
 import 'list_extension.dart';
 import 'mirror_finder.dart';
 import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
 import 'models/search.dart';
+import 'page_parser.dart';
 import 'search/libgen_search.dart';
 import 'util.dart';
 
@@ -14,7 +16,7 @@ part 'libgen.abstract.dart';
 
 @immutable
 class Libgen extends _AbstactLibgen {
-  final HttpClient _client;
+  final LibgenApi _client;
 
   Libgen({
     HttpClient client,
@@ -23,7 +25,7 @@ class Libgen extends _AbstactLibgen {
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)
-      : _client = HttpClient(baseUri: schema.baseUri),
+      : _client = LibgenApi(baseUri: schema.baseUri),
         super(options: schema.options);
 
   static MirrorFinder get finder => MirrorFinder.fromSchemas(mirrorSchemas);
@@ -90,7 +92,8 @@ class Libgen extends _AbstactLibgen {
   /// Returns the latest [Book.id]
   @override
   Future<int> getLatestId() async {
-    final data = await _client.search({'mode': 'last'});
+    final body = await _client.search({'mode': 'last'});
+    final data = PageParser(body);
 
     return data.firstId;
   }
