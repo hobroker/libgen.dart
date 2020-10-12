@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:http/http.dart' hide get;
+import 'package:http/http.dart' show Client, Response;
 import 'package:meta/meta.dart';
 
 import 'exceptions.dart';
@@ -22,7 +22,11 @@ class HttpClient {
     Map<String, String> query,
   ]) async {
     final url = baseUri?.replace(path: path, queryParameters: query);
-    final response = await client.get(url);
+
+    return client.get(url).then(_reply);
+  }
+
+  String _reply(Response response) {
     if (response.statusCode != 200) {
       throw HttpException(response);
     }
