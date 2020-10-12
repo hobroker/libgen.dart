@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+import '../util.dart';
+
 @immutable
 class Book {
   final int id;
