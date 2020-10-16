@@ -65,6 +65,12 @@ void main() async {
 
         expect(parser.firstId, null);
       });
+
+      test('returns null when [html] is invalid', () {
+        final parser = PageParser('invalid');
+
+        expect(parser.firstId, null);
+      });
     });
 
     test('== returns the expected result', () {
