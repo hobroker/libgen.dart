@@ -99,11 +99,11 @@ void main() {
 
     group('.getLatestId()', () {
       test('returns the expected first id from the list', () async {
-        final client = MockLibgenApi();
-        when(client.search(any))
+        final api = MockLibgenApi();
+        when(api.search(any))
             .thenAnswer((_) async => parsedPageWithIds([1, 2]));
 
-        final mirror = Libgen(api: client);
+        final mirror = Libgen(api: api);
         final result = await mirror.getLatestId();
 
         expect(result, 1);
