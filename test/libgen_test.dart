@@ -112,12 +112,12 @@ void main() {
 
     group('.getLatest()', () {
       test('returns the expected first id from the list', () async {
-        final client = mockedLibgenApi();
-        when(client.search(any))
-            .thenAnswer((_) async => parsedPageWithIds([1]));
+        final api = mockedLibgenApi();
+        when(api.search(any)).thenAnswer((_) async => parsedPageWithIds([1]));
 
-        final mirror = Libgen(api: client);
+        final mirror = Libgen(api: api);
         final result = await mirror.getLatest();
+        verify(api.search({'mode': 'last'}));
 
         expect(result, firstBook.object);
       });
@@ -125,13 +125,21 @@ void main() {
 
     group('.search()', () {
       test('returns the expected List', () async {
+        final query = 'something';
         final expected = [darkMatterBook.object];
         final ids = expected.map((e) => e.id).toList();
         final api = mockedLibgenApi();
         when(api.search(any)).thenAnswer((_) async => parsedPageWithIds(ids));
 
         final mirror = Libgen(api: api);
-        final result = await mirror.search(query: 'something');
+        final result = await mirror.search(query: query);
+        verify(api.search({
+          'req': query,
+          'res': '25',
+          'page': '1',
+          'column': 'def',
+          'view': 'simple',
+        }));
 
         expect(result, expected);
       });

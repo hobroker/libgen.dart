@@ -75,7 +75,7 @@ class Libgen extends _AbstactLibgen {
     @required String query,
     int count = 25,
     int offset = 0,
-    SearchColumn searchIn,
+    SearchColumn searchIn = SearchColumn.def,
   }) async {
     final libgenSearch = LibgenSearch(
       query: query,
