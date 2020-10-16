@@ -17,7 +17,7 @@ void main() {
 
     test('accepts a [client]', () async {
       final expected = 'something';
-      final client = HttpClient(client: mockedClientWithRespoonse(expected));
+      final client = HttpClient(client: mockedClientWithResponse(expected));
       final response = await client.get('/');
 
       expect(response, expected);
@@ -27,7 +27,7 @@ void main() {
       test('returns the expected response', () async {
         final expected = '{"id": "1"}';
         final client = HttpClient(
-          client: mockedClientWithRespoonse(expected),
+          client: mockedClientWithResponse(expected),
         );
         final result = await client.get('one');
 
@@ -35,9 +35,9 @@ void main() {
       });
 
       test('throws HttpException when statusCode is not 200', () async {
-        final response = {};
+        final response = '{}';
         final client = HttpClient(
-          client: mockedClientWithRespoonse(response, 500),
+          client: mockedClientWithResponse(response, 500),
         );
 
         try {

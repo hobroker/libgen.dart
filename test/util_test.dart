@@ -9,7 +9,7 @@ void main() {
       expect(minNonNullIndex([2, null, 3]), equals(0));
     });
 
-    test('returns null', () async {
+    test('returns Null', () async {
       expect(minNonNullIndex([]), isNull);
       expect(minNonNullIndex([null, null]), isNull);
     });
@@ -25,7 +25,7 @@ void main() {
 }'''));
     });
 
-    test('returns [null] on null input', () {
+    test('returns Null on Null input', () {
       expect(beautify(null), equals('null'));
     });
   });

@@ -5,7 +5,7 @@ import '../page_parser.dart';
 import 'compute_pagination.dart';
 import 'page_options.dart';
 
-typedef SearchRequest = Future<String> Function(Map<String, String>);
+typedef SearchRequest = Future<PageParser> Function(Map<String, String>);
 
 @immutable
 class LibgenSearch {
@@ -36,8 +36,7 @@ class LibgenSearch {
         'page': page.page,
         'res': page.limit,
       }..addAll(defaultParams);
-      final body = await search(query);
-      final data = PageParser(body);
+      final data = await search(query);
       final ids = data.ids.drop(page.ignoreFirst, page.ignoreLast);
 
       idsAcc.addAll(ids);

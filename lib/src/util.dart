@@ -18,7 +18,4 @@ int minNonNullIndex(List list) {
 
 String beautify(Map json) => JsonEncoder.withIndent('  ').convert(json);
 
-Map<K, V> pick<K, V>(Map<K, V> json, List<K> keys) =>
-    Map<K, V>.fromEntries(keys.map((key) => MapEntry(key, json[key])));
-
 String enumValue(Object value) => value.toString().split('').last;

@@ -7,6 +7,7 @@ import 'package:meta/meta.dart';
 import '../libgen.dart';
 import 'constants.dart';
 import 'http_client.dart';
+import 'page_parser.dart';
 
 @immutable
 class LibgenApi extends HttpClient {
@@ -18,7 +19,8 @@ class LibgenApi extends HttpClient {
   LibgenApi.fromSchema(MirrorSchema schema) : super(baseUri: schema.baseUri);
 
   /// Requests /json.php with [ids] and [searchFields]
-  Future<List> json(List ids) async {
+  /// Returns a [List] of [int]
+  Future<List> getByIds(List ids) async {
     final body = await get('json.php', {
       'ids': ids.join(','),
       'fields': searchFields,
@@ -31,6 +33,11 @@ class LibgenApi extends HttpClient {
     return JsonDecoder().convert(body);
   }
 
-  /// Requests /search.php with [query]
-  Future<String> search(Map<String, String> query) => get('search.php', query);
+  /// Requests /search.php with [query] and parses the page
+  /// Returns a [PageParser] instance
+  Future<PageParser> search(Map<String, String> query) async {
+    final body = await get('search.php', query);
+
+    return PageParser(body);
+  }
 }

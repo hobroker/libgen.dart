@@ -8,7 +8,6 @@ import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
 import 'models/search.dart';
-import 'page_parser.dart';
 import 'search/libgen_search.dart';
 import 'util.dart';
 
@@ -16,26 +15,26 @@ part 'libgen.abstract.dart';
 
 @immutable
 class Libgen extends _AbstactLibgen {
-  final LibgenApi _client;
+  final LibgenApi _api;
 
   Libgen({
     HttpClient client,
     MirrorOptions options = const MirrorOptions(),
-  })  : _client = client ?? LibgenApi.fromSchema(mirrorSchemas.first),
+  })  : _api = client ?? LibgenApi.fromSchema(mirrorSchemas.first),
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)
-      : _client = LibgenApi(baseUri: schema.baseUri),
+      : _api = LibgenApi(baseUri: schema.baseUri),
         super(options: schema.options);
 
   static MirrorFinder get finder => MirrorFinder.fromSchemas(mirrorSchemas);
 
   /// Returns a [Libgen] instance
-  /// with [_client] being [MirrorSchema] with THE SHORTEST [ping] response
+  /// with [_api] being [MirrorSchema] with THE SHORTEST [ping] response
   static Future<Libgen> fastest() => finder.fastest();
 
   /// Returns a [Libgen] instance
-  /// with [_client] being [MirrorSchema] with ANY SUCCESSFUL [ping] response
+  /// with [_api] being [MirrorSchema] with ANY SUCCESSFUL [ping] response
   static Future<Libgen> any() => finder.any();
 
   /// Returns a [Book] by [id] or [Null] on no result
@@ -53,7 +52,7 @@ class Libgen extends _AbstactLibgen {
   @override
   Future<List<Book>> getByIds(List<int> ids) async {
     final list = <Book>[];
-    final results = await _client.json(ids);
+    final results = await _api.getByIds(ids);
     final byId = results.fold<Map<int, Book>>({}, (acc, item) {
       acc[int.parse(item['id'])] = Book.fromJson(item);
 
@@ -84,7 +83,7 @@ class Libgen extends _AbstactLibgen {
       offset: offset,
       searchIn: enumValue(searchIn),
     );
-    final ids = await libgenSearch.run(_client.search);
+    final ids = await libgenSearch.run(_api.search);
 
     return getByIds(ids);
   }
@@ -92,8 +91,7 @@ class Libgen extends _AbstactLibgen {
   /// Returns the latest [Book.id]
   @override
   Future<int> getLatestId() async {
-    final body = await _client.search({'mode': 'last'});
-    final data = PageParser(body);
+    final data = await _api.search({'mode': 'last'});
 
     return data.firstId;
   }

@@ -51,14 +51,14 @@ void main() {
         expect(result, darkMatterBook.object);
       });
 
-      test('returns null on no results', () async {
+      test('returns Null on no results', () async {
         final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.getById(-1);
 
         expect(result, isNull);
       });
 
-      test('returns null when null is the [id]', () async {
+      test('returns Null when Null is the [id]', () async {
         final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.getById(null);
 
@@ -99,7 +99,7 @@ void main() {
       test('returns the expected first id from the list', () async {
         final client = MockLibgenApi();
         when(client.search(any))
-            .thenAnswer((_) async => getHtmlPageWithIds([1, 2]));
+            .thenAnswer((_) async => getParsedHtmlPageWithIds([1, 2]));
 
         final mirror = Libgen(client: client);
         final result = await mirror.getLatestId();
@@ -112,7 +112,7 @@ void main() {
       test('returns the expected first id from the list', () async {
         final client = mockedLibgenApi();
         when(client.search(any))
-            .thenAnswer((_) async => getHtmlPageWithIds([1]));
+            .thenAnswer((_) async => getParsedHtmlPageWithIds([1]));
 
         final mirror = Libgen(client: client);
         final result = await mirror.getLatest();
