@@ -13,7 +13,15 @@ class PageParser {
 
   int get firstId => _extractRowId(_rows.firstOrNull);
 
-  List<Element> get _rows => _document.querySelectorAll('.c tr')..removeAt(0);
+  List<Element> get _rows {
+    final list = _document.querySelectorAll('.c tr');
+
+    if (list.isNotEmpty) {
+      list.removeAt(0);
+    }
+
+    return list;
+  }
 
   int _extractRowId(el) {
     final text = el?.querySelector('td')?.text;
