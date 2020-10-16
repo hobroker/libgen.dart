@@ -1,7 +1,9 @@
 import 'package:meta/meta.dart';
 
+import '../constants.dart';
 import '../list_extension.dart';
 import '../page_parser.dart';
+import '../util.dart';
 import 'compute_pagination.dart';
 import 'page_options.dart';
 
@@ -12,19 +14,19 @@ class LibgenSearch {
   final String query;
   final int count;
   final int offset;
-  final String searchIn;
+  final SearchColumn searchIn;
   final List<PageOptions> _pages;
 
   LibgenSearch({
     @required this.query,
     this.count = 25,
     this.offset = 0,
-    this.searchIn,
+    this.searchIn = SearchColumn.def,
   }) : _pages = computePagination(count, offset: offset);
 
   Map<String, String> get _defaultParams => {
         'req': query,
-        'column': searchIn ?? 'def',
+        'column': enumValue(searchIn),
         'view': 'simple',
       };
 

@@ -1,14 +1,13 @@
 import 'package:meta/meta.dart';
 
+import 'constants.dart';
 import 'libgen_api.dart';
 import 'list_extension.dart';
 import 'mirror_finder.dart';
 import 'mirror_schema.dart';
 import 'mirrors.dart';
 import 'models/book.dart';
-import 'models/search.dart';
 import 'search/libgen_search.dart';
-import 'util.dart';
 
 part 'libgen.abstract.dart';
 
@@ -81,7 +80,7 @@ class Libgen extends _AbstactLibgen {
       query: query,
       count: count,
       offset: offset,
-      searchIn: enumValue(searchIn),
+      searchIn: searchIn,
     );
     final ids = await libgenSearch.run(_api.search);
 
