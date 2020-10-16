@@ -13,29 +13,29 @@ class LibgenSearch {
   final int count;
   final int offset;
   final String searchIn;
-  final List<PageOptions> _nav;
+  final List<PageOptions> _pages;
 
   LibgenSearch({
     @required this.query,
-    this.count,
-    this.offset,
+    this.count = 25,
+    this.offset = 0,
     this.searchIn,
-  }) : _nav = computePagination(count, offset: offset);
+  }) : _pages = computePagination(count, offset: offset);
 
-  Map<String, String> get defaultParams => {
+  Map<String, String> get _defaultParams => {
         'req': query,
-        'column': searchIn,
+        'column': searchIn ?? 'def',
         'view': 'simple',
       };
 
   Future<List<int>> run(SearchRequest search) async {
     final idsAcc = <int>[];
 
-    for (final page in _nav) {
+    for (final page in _pages) {
       final query = {
         'page': page.page,
         'res': page.limit,
-      }..addAll(defaultParams);
+      }..addAll(_defaultParams);
       final data = await search(query);
       final ids = data.ids.drop(page.ignoreFirst, page.ignoreLast);
 
