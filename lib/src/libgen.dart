@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 
-import 'http_client.dart';
 import 'libgen_api.dart';
 import 'list_extension.dart';
 import 'mirror_finder.dart';
@@ -18,15 +17,16 @@ class Libgen extends _AbstactLibgen {
   final LibgenApi _api;
 
   Libgen({
-    HttpClient client,
+    LibgenApi api,
     MirrorOptions options = const MirrorOptions(),
-  })  : _api = client ?? LibgenApi.fromSchema(mirrorSchemas.first),
+  })  : _api = api ?? LibgenApi.fromSchema(mirrorSchemas.first),
         super(options: options);
 
   Libgen.fromSchema(MirrorSchema schema)
       : _api = LibgenApi(baseUri: schema.baseUri),
         super(options: schema.options);
 
+  /// Returns a [MirrorFinder] instance with [mirrorSchemas]
   static MirrorFinder get finder => MirrorFinder.fromSchemas(mirrorSchemas);
 
   /// Returns a [Libgen] instance
