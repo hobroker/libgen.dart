@@ -9,7 +9,7 @@ void main() {
       expect(minNonNullIndex([2, null, 3]), 0);
     });
 
-    test('returns null', () async {
+    test('returns Null', () async {
       expect(minNonNullIndex([]), isNull);
       expect(minNonNullIndex([null, null]), isNull);
     });
@@ -25,21 +25,8 @@ void main() {
 }''');
     });
 
-    test('returns [null] on null input', () {
+    test('returns Null on Null input', () {
       expect(beautify(null), 'null');
-    });
-  });
-
-  group('getResultsCount', () {
-    test('returns the expected int', () {
-      expect(getResultsCount(10), 25);
-      expect(getResultsCount(5), 25);
-      expect(getResultsCount(25), 25);
-      expect(getResultsCount(30), 50);
-      expect(getResultsCount(50), 50);
-      expect(getResultsCount(70), 100);
-      expect(getResultsCount(100), 100);
-      expect(getResultsCount(120), 100);
     });
   });
 }

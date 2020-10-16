@@ -5,10 +5,10 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 import '__mocks__/book_mock.dart';
+import '__mocks__/libgen_api_mock.dart';
 import '__mocks__/pages_mock.dart';
 import '__mocks__/schema_mock.dart';
 import 'constants.dart';
-import 'utils.dart';
 
 void main() {
   group('Libgen', () {
@@ -46,21 +46,21 @@ void main() {
 
     group('.getById()', () {
       test('returns the expected [Book]', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+        final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.getById(1591104);
 
         expect(result, darkMatterBook.object);
       });
 
-      test('returns null on no results', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+      test('returns Null on no results', () async {
+        final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.getById(-1);
 
         expect(result, isNull);
       });
 
-      test('returns null when null is the [id]', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+      test('returns Null when Null is the [id]', () async {
+        final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.getById(null);
 
         expect(result, isNull);
@@ -69,7 +69,7 @@ void main() {
 
     group('.getByIds()', () {
       test('returns the expected [List] of [Book]', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+        final mirror = Libgen(client: mockedLibgenApi());
         final expected = {
           1: firstBook.object,
           1591104: darkMatterBook.object,
@@ -80,7 +80,7 @@ void main() {
       });
 
       test('returns empty list on no results', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+        final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.getByIds([-1]);
 
         expect(result, []);
@@ -89,7 +89,7 @@ void main() {
 
     group('.ping()', () {
       test('returns pong on success', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+        final mirror = Libgen(client: mockedLibgenApi());
         final result = await mirror.ping();
 
         expect(result, 'pong');
@@ -98,9 +98,9 @@ void main() {
 
     group('.getLatestId()', () {
       test('returns the expected first id from the list', () async {
-        final client = MockHttpClient();
-        when(client.requestRaw('search.php', query: anyNamed('query')))
-            .thenAnswer((_) async => getHtmlPageWithIds([1, 2]));
+        final client = MockLibgenApi();
+        when(client.search(any))
+            .thenAnswer((_) async => getParsedHtmlPageWithIds([1, 2]));
 
         final mirror = Libgen(client: client);
         final result = await mirror.getLatestId();
@@ -111,9 +111,9 @@ void main() {
 
     group('.getLatest()', () {
       test('returns the expected first id from the list', () async {
-        final client = defaultMockedClient();
-        when(client.requestRaw('search.php', query: anyNamed('query')))
-            .thenAnswer((_) async => getHtmlPageWithIds([1]));
+        final client = mockedLibgenApi();
+        when(client.search(any))
+            .thenAnswer((_) async => getParsedHtmlPageWithIds([1]));
 
         final mirror = Libgen(client: client);
         final result = await mirror.getLatest();
@@ -124,7 +124,7 @@ void main() {
 
     group('.canDownload', () {
       test('returns false when [options] are missing', () async {
-        final mirror = Libgen(client: defaultMockedClient());
+        final mirror = Libgen(client: mockedLibgenApi());
 
         expect(mirror.canDownload, isFalse);
       });
@@ -132,14 +132,14 @@ void main() {
       test('returns the expected value', () async {
         expect(
           Libgen(
-            client: defaultMockedClient(),
+            client: mockedLibgenApi(),
             options: MirrorOptions(canDownload: false),
           ).canDownload,
           isFalse,
         );
         expect(
           Libgen(
-            client: defaultMockedClient(),
+            client: mockedLibgenApi(),
             options: MirrorOptions(canDownload: true),
           ).canDownload,
           isTrue,
