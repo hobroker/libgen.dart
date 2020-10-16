@@ -35,7 +35,4 @@ class PageParser {
       other is PageParser &&
           runtimeType == other.runtimeType &&
           html == other.html;
-
-  @override
-  int get hashCode => html.hashCode;
 }
