@@ -6,8 +6,8 @@
 Dart wrapper for the [Library Genesis API](https://garbage.world/posts/libgen), with search built on top of it.
 
 ## 💬 Contributing
-- [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Contributing](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## 👀 Other languages
 - JavaScript: https://github.com/dunn/libgen.js
