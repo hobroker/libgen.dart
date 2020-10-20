@@ -9,7 +9,8 @@ Dart wrapper for the [Library Genesis API](https://garbage.world/posts/libgen), 
 
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 
-## Other languages
+## 👀 Other languages
 - JavaScript: https://github.com/dunn/libgen.js
-- Ruby: https://github.com/Sag0Sag0/libgen_api
 - Python: https://github.com/mmarquezs/libgen-python-api
+- Ruby: https://github.com/Sag0Sag0/libgen_api
+- Go (cli): https://github.com/ciehanski/libgen-cli
