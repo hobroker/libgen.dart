@@ -1,12 +1,14 @@
 # Contributing
 
-If you want to contribute to the project and make it better, your help is very welcome.
+If you want to contribute to the project and make it better,
+your help is very welcome.
 
 ## How to open a pull request
 - Create a personal fork of the project on Github
-- Clone the fork on your local machine. Your remote repo on Github is called `origin`
+- Clone the fork on your local machine
 - Add the original repository as a remote called `upstream`
-- If you created your fork a while ago be sure to pull upstream changes into your local repository
+- If you created your fork a while ago be sure to pull upstream changes
+into your local repository
 - Create a new branch from `master` to work on
 - Implement/fix your feature, comment your code
 - Follow the code style of the project, including indentation
